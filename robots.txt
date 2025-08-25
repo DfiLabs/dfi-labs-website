@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dfi-labs.com/sitemap.xml

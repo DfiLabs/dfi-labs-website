@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="preconnect" href="https://api.binance.com">
+<meta name="theme-color" content="#538CFF">
+<link rel="manifest" href="/assets/manifest.webmanifest">
+<meta charset="UTF-8">
+<title>DFI Labs</title>
+<meta name="description" content="DFI Labs – Paris‑based quantitative crypto asset manager delivering disciplined research and 24 / 7 trading expertise.">
+<link rel="canonical" href="https://dfi-labs.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dfi-labs.com/">
+<meta property="og:title" content="DFI Labs – Quant Crypto Asset Manager">
+<meta property="og:description" content="Disciplined quant expertise scaled to 24 / 7 crypto markets.">
+<meta property="og:image" content="/assets/img/logo.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="/favicon.ico" sizes="192x192">
+<link rel="preload" href="/assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-italic.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- ================================  STYLE  ================================ -->
+<style>
+/* === FONT & ROOT ======================================================== */
+@font-face{font-family:Inter;font-weight:400 700;font-display:swap;
+  src:url("/assets/fonts/inter.woff2") format("woff2")}
+@font-face{font-family:Inter;font-style:italic;font-weight:400 700;font-display:swap;
+  src:url("/assets/fonts/inter-italic.woff2") format("woff2")}
+:root{
+  --bg:#FCFBF9;--fg:#181A20;--muted:#6A6D73;--radius:18px;
+  --c1:#538CFF;--c2:#FF97A4;--c3:#83D6BB;--c4:#C0B1FF;
+  --border:#E2DFD8;--depth-sm:0 3px 6px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.08);
+  --depth-lg:0 14px 34px rgba(0,0,0,.1);
+}
+html,body{margin:0;background:var(--bg);max-width:100%;
+  font:18px/1.6 Inter,Arial,sans-serif;color:var(--fg);scroll-behavior:smooth;}
+
+/* === PRICE CHIP & RIBBON ============================================== */
+#ribbon{position:fixed;top:0;left:0;right:0;height:6px;z-index:900;
+  background:linear-gradient(90deg,var(--c1),var(--c4));}
+#chip{position:fixed;top:10px;right:5%;z-index:901;display:flex;align-items:center;gap:8px;
+  padding:5px 14px 5px 18px;border-radius:24px;font:600 15px/1 Inter;
+  color:#fff;background:rgba(24,26,32,.9);backdrop-filter:blur(6px);
+  box-shadow:0 3px 12px rgba(0,0,0,.25);transition:background .3s}
+@media(max-width:640px){#chip{right:10px}}
+@keyframes bump{0%,100%{transform:scale(1)}40%{transform:scale(1.08)}}
+#chip.bump{animation:bump .4s cubic-bezier(.45,.09,.26,1.28)}
+
+/* === NAV =============================================================== */
+nav{position:sticky;top:6px;z-index:850;display:flex;align-items:center;
+  padding:12px 5%;background:rgba(255,255,255,.9);backdrop-filter:blur(8px)}
+nav img{height:120px;transition:.3s}
+nav ul{display:flex;gap:32px;margin-left:auto;list-style:none;padding:0;font-weight:600}
+nav a{color:var(--fg);position:relative;text-decoration:none}
+nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;
+                    background:linear-gradient(90deg,var(--c1),var(--c4))}
+#burger{display:none;background:none;border:0;font-size:32px;margin-left:auto}
+@media(max-width:680px){#burger{display:block}
+  nav ul{position:fixed;inset:0 0 0 auto;width:240px;padding:120px 26px 0;
+         flex-direction:column;gap:24px;transform:translateX(100%);
+         background:#fff;transition:.35s transform ease;box-shadow:-6px 0 16px rgba(0,0,0,.08)}
+  nav ul.show{transform:none}}
+
+/* === HERO ============================================================== */
+.hero div{text-align:center}
+.hero{display:flex;align-items:center;justify-content:center;min-height:88vh;padding:0 5%;
+  position:relative;overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:.14}
+.hero::before{width:620px;height:620px;left:-200px;top:-160px;background:var(--c2)}
+.hero::after{width:680px;height:680px;right:-220px;bottom:-220px;background:var(--c3)}
+.hero h1{font:700 clamp(2.3rem,5.3vw,4.3rem)/1.12 Inter,sans-serif;margin:0;
+  background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;color:transparent;
+  opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;}
+.hero p{max-width:60ch;margin:32px auto 0;color:var(--muted);
+  opacity:0;transform:translateY(16px);transition:opacity .8s ease .15s,transform .8s ease .15s}
+
+/* === SECTION TEMPLATE ================================================== */
+section{padding:96px 5%}
+section.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
+.reveal.show{opacity:1!important;transform:none!important}
+
+/* === EDGE + SUITE GRIDS =============================================== */
+.grid{display:grid;gap:44px;margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.card{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
+  transition:transform .3s cubic-bezier(.4,.75,.4,1),box-shadow .3s}
+.card:hover{transform:translateY(-8px);box-shadow:var(--depth-lg)}
+.card strong{font-size:21px;display:block;margin-bottom:12px}
+.icon{width:42px;height:42px;margin-bottom:22px;}
+
+/* === CONTACT =========================================================== */
+.contact-box{background:rgba(83,140,255,.08);border:1px solid #d6e1ff;
+  padding:68px 86px;max-width:740px;margin:auto;border-radius:var(--radius);text-align:center}
+.mail-btn{display:inline-block;margin-top:34px;padding:15px 44px;border:2px solid var(--c1);
+  border-radius:var(--radius);font-weight:600;text-decoration:none;color:var(--fg)}
+.mail-btn:hover{background:var(--c1);color:#fff}
+
+/* === TEAM GRID ========================================================= */
+.team{display:grid;gap:54px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:50px}
+.member{text-align:center;opacity:0;transform:translateY(30px);transition:.9s opacity,.9s transform}
+.member.show{opacity:1;transform:none}
+.member img{width:120px;height:120px;border-radius:50%;object-fit:cover;filter:grayscale(100%);box-shadow:var(--depth-sm);margin-bottom:14pxobject-fit:cover;}
+#yuval{object-position:50% 22%}
+#flavien{object-position:50% 30%}
+#leo{object-position:50% 28%}
+#louis{object-position:50% 26%}
+#olivier{object-position:50% 38%}
+#hadrien{object-position:50% 30%}
+#yuval{object-position:50% 22%}
+#flavien{object-position:50% 30%}
+#leo{object-position:50% 28%}
+#louis{object-position:50% 26%}
+#olivier{object-position:50% 38%}
+#hadrien{object-position:50% 30%}
+.member h3{font-size:19px;margin:0 0 4px}
+.member p{font-size:.92rem;color:var(--muted)}
+  text-align:center;
+.member .bio{font-size:.85rem;color:var(--muted);line-height:1.45;margin-top:6px}
+
+/* === RISK & GOVERNANCE CARD =========================================== */
+.card.risk-governance{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
+  transition:transform .3s cubic-bezier(.4,.75,.4,1),box-shadow .3s}
+.card.risk-governance:hover{transform:translateY(-8px);box-shadow:var(--depth-lg)}
+.card.risk-governance strong{font-size:21px;display:block;margin-bottom:12px}
+.card.risk-governance p{font-size:1rem;color:var(--muted);}
+#yuval{object-position:50% 22%}#flavien{object-position:50% 30%}#leo{object-position:50% 28%}#louis{object-position:50% 26%}#olivier{object-position:50% 38%}#hadrien{object-position:50% 30%}
+#yuval{object-position:50% 22%}#flavien{object-position:50% 30%}#leo{object-position:50% 28%}#louis{object-position:50% 26%}#olivier{object-position:50% 38%}#hadrien{object-position:50% 30%}
+</style>
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+<!-- ================= PRICE CHIP + RIBBON ============================== -->
+<div id="ribbon"></div>
+<div id="chip"><span id="btc">–</span></div>
+
+<!-- ================= NAVIGATION ======================================= -->
+<nav>
+  <img loading="lazy" src="/assets/img/logo.webp" alt="DFI Labs logo">
+  <button id="burger" aria-label="menu">☰</button>
+  <ul id="nav">
+    <li><a href="#firm">Firm</a></li><li><a href="#edge">Edge</a></li>
+    <li><a href="#suite">Strategies</a></li><li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ================= HERO ============================================ -->
+<header class="hero">
+  <div>
+    <h1 class="reveal">Disciplined quant expertise<br>scaled to 24 / 7 crypto markets.</h1>
+    <p class="reveal" style="margin-top:16px">From raw data to live trades: we automate the edge.</p>
+  </div>
+</header>
+
+<main>
+<!-- ===== Firm ========================================================= -->
+<section id="firm" class="reveal">
+  <h2>Who We Are <span style="color:var(--muted);font-size:28px">01.</span></h2>
+  <p style="max-width:62ch">DFI Labs is a Paris-based crypto asset manager established in 2019. We deliver institutional-grade risk governance, in-house technology and performance-driven research.</p>
+</section>
+
+<!-- ===== Edge ========================================================= -->
+<section id="edge" class="reveal">
+  <h2>Our Edge <span style="color:var(--muted);font-size:28px">02.</span></h2>
+  <div class="grid">
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/alpha.svg" alt="" />
+      <strong>Alpha-Discovery Expertise</strong>
+      <p>25 + years of systematic research turning raw crypto data into repeatable trading edge.</p>
+    </div>
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/research.svg" alt="" />
+      <strong>Research Engine</strong><p>Factor & ML models validated on our proprietary back-test grid.</p>
+    </div>
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/execution.svg" alt="" />
+      <strong>24 / 7 Execution</strong><p>Low-latency smart router that prioritises maker liquidity and streams real-time risk metrics.</p>
+    </div>
+    <!-- ===== Risk & Governance Card (Fits with Other Cards) ============ -->
+    <div class="card risk-governance reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/risk.svg" alt="" />
+      <strong>Risk & Governance</strong>
+      <p>AMF‑registered; proactive exchange‑exit playbook (FTX 2022).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Strategy Suite ============================================== -->
+<section id="suite" class="reveal">
+  <h2>Strategy Suite <span style="color:var(--muted);font-size:28px">03.</span></h2>
+  <div class="grid">
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/vision.svg" alt="" />
+      <strong>Vision — Directional</strong>
+      <p>Selective long exposure with dynamic hedging powered by factor & sentiment regimes.</p>
+    </div>
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/descartes.svg" alt="" />
+      <strong>Descartes — Market-Neutral</strong><p>Cross-sectional long-short harvesting dispersion across 100 + liquid tokens.</p>
+    </div>
+    <div class="card reveal">
+      <img class="icon" loading="lazy" src="/assets/icons/smartarb.svg" alt="" />
+      <strong>SmartArb — Delta-Neutral</strong><p>Basis capture between futures/perps and spot pairs for low-volatility yield.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Leadership  ================================================== -->
+<section class="reveal">
+  <h2>Leadership <span style="color:var(--muted);font-size:28px">04.</span></h2>
+  <div class="team">
+    <div class="member">
+      <img loading="lazy" id="louis" id="louis" id="louis" src="/img/team/louis.webp" id="louis"    alt="Louis Benassy">
+      <h3>Louis Benassy</h3><p>COO</p>
+      <p class="bio">Crypto-asset specialist; co-founded Chainvest (2017). MSc/BSc Finance, Cass &amp; NUS.</p>
+    </div>
+    <div class="member">
+      <img loading="lazy" id="olivier" id="olivier" id="olivier" src="/img/team/olivier.webp" id="olivier"  alt="Olivier Chevillon">
+      <h3>Olivier Chevillon</h3><p>Founder &amp; CIO</p>
+      <p class="bio">20 + years managing quantitative strategies for tier-1 hedge funds. MBA INSEAD, MSc ENSAE.</p>
+    </div>
+    <div class="member">
+      <img loading="lazy" id="hadrien" id="hadrien" id="hadrien" src="/img/team/hadrien.webp" id="hadrien"  alt="Hadrien Darmon">
+      <h3>Hadrien Darmon</h3><p>CTO &amp; Quant</p>
+      <p class="bio">Principal PM at Method Investments. CentraleSupélec &amp; Paris-Assas.</p>
+    </div>
+    <div class="member">
+      <img loading="lazy" id="yuval" id="yuval" id="yuval" src="/img/team/yuval.webp" id="yuval"    alt="Yuval Reisman">
+      <h3>Yuval Reisman</h3><p>Partner</p>
+      <p class="bio">CEO/co-founder of YRD (market-neutral crypto fund). ex-CEO Hone Capital. MBA INSEAD.</p>
+    </div>
+    <div class="member">
+      <img loading="lazy" id="flavien" id="flavien" id="flavien" src="/img/team/flavien.webp" id="flavien"  alt="Flavien Gelineau">
+      <h3>Flavien Gelineau</h3><p>Partner</p>
+      <p class="bio">Data-science &amp; ML expert (top 1 % Kaggle).<br>Ex-Google; ENSTA ParisTech.</p>
+    </div>
+    <div class="member">
+      <img loading="lazy" id="leo" id="leo" id="leo" src="/img/team/leo.webp" id="leo"      alt="Leo Rene">
+      <h3>Leo Rene</h3><p>Quant Researcher</p>
+      <p class="bio">Data &amp; ML-focused; Researcher at Qube.<br>ENSAE &amp; École Polytechnique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Contact ====================================================== -->
+<section id="contact" class="reveal">
+  <div class="contact-box">
+    <h2>Contact <span style="color:var(--muted);font-size:28px">05.</span></h2>
+    <p>14 Avenue du Général-de-Gaulle<br>94160 Saint-Mandé – France</p>
+    <a href="mailto:hello@dfi-labs.com" class="mail-btn">hello@dfi-labs.com</a>
+  </div>
+</section>
+</main>
+
+<footer style="padding:56px 5% 70px;text-align:center;font-size:.85rem;color:var(--muted)">
+  © 2025 DFI Labs — AMF-registered (E2022-032). Privacy &amp; Compliance docs available on request.
+</footer>
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<!-- ================= SCRIPT ========================================== -->
+<script defer>
+/* ==== BTC price / ribbon ============================================ */
+(function(){
+  const chip=document.getElementById('chip'),price=document.getElementById('btc'),rib=document.getElementById('ribbon');
+  let last=null;
+  async function tick(){
+    try{
+      const j=await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT').then(r=>r.json());
+      const p=Math.round(+j.lastPrice),pc=+j.priceChangePercent;
+      if(p!==last){last=p;chip.classList.add('bump');chip.addEventListener('animationend',()=>chip.classList.remove('bump'),{once:true})}
+      price.textContent=`฿ ${p.toLocaleString()}  ${pc>0?'+':''}${pc.toFixed(2)}%`;
+      price.style.color=pc>0?'#19c37d':'#ff6464';
+      rib.style.background=pc>0?'linear-gradient(90deg,var(--c3),var(--c1))':'linear-gradient(90deg,var(--c2),var(--c1))';
+    }catch(e){}
+    setTimeout(tick,6000);
+  }
+  tick();
+})();
+
+/* ==== burger ========================================================= */
+const burger=document.getElementById('burger'),nav=document.getElementById('nav');
+burger&&burger.addEventListener('click',()=>nav.classList.toggle('show'));
+
+/* ==== scroll spy / back-to-top ====================================== */
+const links=[...document.querySelectorAll('nav a')],topBtn=document.getElementById('toTop');
+addEventListener('scroll',()=>{
+  const y=scrollY+110;
+  links.forEach(l=>{
+    const s=document.querySelector(l.getAttribute('href'));
+    if(!s)return;
+    l.classList.toggle('active',s.offsetTop<=y&&s.offsetTop+s.offsetHeight>y);
+  });
+  topBtn.classList.toggle('show',scrollY>600);
+});
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+
+/* ==== reveal on scroll ============================================== */
+const revealEls=[...document.querySelectorAll('.reveal,.card,.member')];
+const ob=new IntersectionObserver((es)=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}
+}),{threshold:.18});
+revealEls.forEach(el=>ob.observe(el));
+</script>
+</body>
+</html>
