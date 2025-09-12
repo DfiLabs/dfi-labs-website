@@ -146,28 +146,53 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 .mail-btn:hover{background:var(--c1);color:#fff}
 
 /* === TEAM GRID ========================================================= */
-.team{display:grid;gap:54px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:50px}
+.team{display:grid;gap:40px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:60px;
+  max-width:1400px;margin-left:auto;margin-right:auto;position:relative}
+.team::before{content:"";position:absolute;top:-40px;left:-40px;right:-40px;bottom:-40px;
+  background:radial-gradient(circle at 20% 80%,rgba(83,140,255,.03) 0%,transparent 50%),
+             radial-gradient(circle at 80% 20%,rgba(192,177,255,.03) 0%,transparent 50%);
+  border-radius:32px;z-index:-1}
 .member{text-align:center;opacity:0;transform:translateY(30px);transition:.9s opacity,.9s transform;
-  padding:24px;border-radius:var(--radius);background:#fff;box-shadow:var(--depth-sm);
-  transition:all .3s ease}
-.member:hover{transform:translateY(-8px);box-shadow:var(--depth-lg)}
-.member.show{opacity:1;transform:none}
-.member img{width:120px;height:120px;border-radius:50%;object-fit:cover;filter:grayscale(100%);
-  box-shadow:var(--depth-sm);margin-bottom:14px;transition:all .3s ease;
-  border:3px solid transparent}
-.member:hover img{filter:grayscale(0%);transform:scale(1.05);
+  padding:32px 24px;border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,249,255,.95));
+  box-shadow:0 8px 32px rgba(0,0,0,.08);transition:all .4s cubic-bezier(.4,.75,.4,1);
+  border:1px solid rgba(83,140,255,.08);position:relative;overflow:hidden}
+.member::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--c1),var(--c4));transform:scaleX(0);
+  transition:transform .4s cubic-bezier(.4,.75,.4,1)}
+.member:hover{transform:translateY(-12px);box-shadow:0 20px 48px rgba(0,0,0,.15);
   border-color:rgba(83,140,255,.2)}
+.member:hover::before{transform:scaleX(1)}
+.member.show{opacity:1;transform:none}
+.member img{width:140px;height:140px;border-radius:50%;object-fit:cover;filter:grayscale(100%);
+  box-shadow:0 8px 24px rgba(0,0,0,.15);margin-bottom:20px;transition:all .4s ease;
+  border:4px solid transparent;position:relative}
+.member img::after{content:"";position:absolute;inset:-4px;border-radius:50%;
+  background:linear-gradient(45deg,var(--c1),var(--c4));z-index:-1;opacity:0;
+  transition:opacity .3s ease}
+.member:hover img{filter:grayscale(0%);transform:scale(1.08);
+  border-color:rgba(83,140,255,.3);box-shadow:0 12px 32px rgba(83,140,255,.2)}
+.member:hover img::after{opacity:1}
 #yuval{object-position:50% 22%}
 #flavien{object-position:50% 30%}
 #leo{object-position:50% 28%}
 #louis{object-position:50% 26%}
 #olivier{object-position:50% 38%}
 #hadrien{object-position:50% 30%}
-.member h3{font-size:19px;margin:0 0 4px;color:var(--fg);transition:color .3s ease}
+.member h3{font:700 22px/1.2 Inter,sans-serif;margin:0 0 8px;color:var(--fg);
+  transition:color .3s ease;letter-spacing:-0.02em}
 .member:hover h3{color:var(--c1)}
-.member p{font-size:.92rem;color:var(--muted);transition:color .3s ease}
+.member p{font-size:16px;color:var(--muted);transition:color .3s ease;font-weight:500;
+  margin:0 0 12px}
 .member:hover p{color:var(--fg)}
-.member .bio{font-size:.85rem;color:var(--muted);line-height:1.45;margin-top:6px}
+.member .bio{font-size:15px;color:var(--muted);line-height:1.5;margin-top:8px;
+  transition:color .3s ease;max-width:280px;margin-left:auto;margin-right:auto}
+.member:hover .bio{color:var(--fg)}
+.member.founder{background:linear-gradient(135deg,rgba(83,140,255,.05),rgba(192,177,255,.05));
+  border:2px solid rgba(83,140,255,.15);transform:scale(1.02)}
+.member.founder::before{background:linear-gradient(90deg,var(--c1),var(--c4),var(--c1));
+  background-size:200% 100%;animation:shimmer 3s ease-in-out infinite}
+@keyframes shimmer{0%,100%{background-position:200% 0}50%{background-position:-200% 0}}
+.member.founder:hover{transform:translateY(-12px) scale(1.02)}
 
 /* === RISK & GOVERNANCE CARD =========================================== */
 .card.risk-governance{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
@@ -284,7 +309,7 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
       <h3>Louis Benassy</h3><p>COO</p>
       <p class="bio">Crypto-asset specialist; co-founded Chainvest (2017). MSc/BSc Finance, Cass &amp; NUS.</p>
     </div>
-    <div class="member">
+    <div class="member founder">
       <img loading="lazy" id="olivier" id="olivier" id="olivier" src="/img/team/olivier.webp" id="olivier"  alt="Olivier Chevillon">
       <h3>Olivier Chevillon</h3><p>Founder &amp; CIO</p>
       <p class="bio">20 + years managing quantitative strategies for tier-1 hedge funds. MBA INSEAD, MSc ENSAE.</p>
@@ -370,6 +395,21 @@ const ob=new IntersectionObserver((es)=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}
 }),{threshold:.18});
 revealEls.forEach(el=>ob.observe(el));
+
+/* ==== staggered team member animations ============================== */
+const teamObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const members=entry.target.querySelectorAll('.member');
+      members.forEach((member,index)=>{
+        setTimeout(()=>member.classList.add('show'),index*150);
+      });
+      teamObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.1});
+const teamSection=document.querySelector('.team');
+if(teamSection)teamObserver.observe(teamSection);
 
 /* ==== hero animations ============================================== */
 window.addEventListener('load',()=>{
