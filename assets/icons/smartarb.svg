@@ -1,9 +1,9 @@
-<!-- Clean & Elegant SmartArb Delta-Neutral Icon -->
+<!-- Elegant & Refined SmartArb Delta-Neutral Icon -->
 <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
   <defs>
     <linearGradient id="smartarbGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#538CFF;stop-opacity:0.15" />
-      <stop offset="100%" style="stop-color:#C0B1FF;stop-opacity:0.15" />
+      <stop offset="0%" style="stop-color:#538CFF;stop-opacity:0.08" />
+      <stop offset="100%" style="stop-color:#C0B1FF;stop-opacity:0.08" />
     </linearGradient>
     <linearGradient id="smartarbStroke" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#538CFF" />
@@ -11,22 +11,28 @@
     </linearGradient>
   </defs>
   
-  <!-- Clean circle background -->
-  <circle cx="21" cy="21" r="18" fill="url(#smartarbGradient)" stroke="url(#smartarbStroke)" stroke-width="2"/>
+  <!-- Elegant rounded square background -->
+  <rect x="3" y="3" width="36" height="36" rx="12" fill="url(#smartarbGradient)" stroke="url(#smartarbStroke)" stroke-width="1.5"/>
   
-  <!-- Simple gear -->
-  <circle cx="21" cy="21" r="8" fill="none" stroke="url(#smartarbStroke)" stroke-width="2"/>
+  <!-- Beautiful gear with refined design -->
+  <circle cx="21" cy="21" r="8" fill="none" stroke="url(#smartarbStroke)" stroke-width="1.5"/>
   
-  <!-- Gear teeth -->
-  <rect x="19" y="11" width="4" height="6" fill="url(#smartarbStroke)" opacity="0.8"/>
-  <rect x="19" y="25" width="4" height="6" fill="url(#smartarbStroke)" opacity="0.8"/>
-  <rect x="11" y="19" width="6" height="4" fill="url(#smartarbStroke)" opacity="0.8"/>
-  <rect x="25" y="19" width="6" height="4" fill="url(#smartarbStroke)" opacity="0.8"/>
+  <!-- Elegant gear teeth -->
+  <rect x="19" y="11" width="4" height="5" fill="url(#smartarbStroke)" opacity="0.7"/>
+  <rect x="19" y="26" width="4" height="5" fill="url(#smartarbStroke)" opacity="0.7"/>
+  <rect x="11" y="19" width="5" height="4" fill="url(#smartarbStroke)" opacity="0.7"/>
+  <rect x="26" y="19" width="5" height="4" fill="url(#smartarbStroke)" opacity="0.7"/>
   
-  <!-- Center dot -->
-  <circle cx="21" cy="21" r="2" fill="url(#smartarbStroke)"/>
+  <!-- Refined center dot -->
+  <circle cx="21" cy="21" r="1.5" fill="url(#smartarbStroke)"/>
   
-  <!-- Simple arbitrage arrows -->
-  <path d="M12 12 L16 8" stroke="#538CFF" stroke-width="2" opacity="0.6"/>
-  <path d="M30 30 L26 34" stroke="#C0B1FF" stroke-width="2" opacity="0.6"/>
+  <!-- Elegant arbitrage arrows -->
+  <path d="M12 12 Q14 10 16 12" stroke="#538CFF" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M30 30 Q28 32 26 30" stroke="#C0B1FF" stroke-width="1.5" fill="none" opacity="0.5"/>
+  
+  <!-- Subtle decorative elements -->
+  <circle cx="12" cy="12" r="1" fill="#538CFF" opacity="0.4"/>
+  <circle cx="30" cy="12" r="1" fill="#C0B1FF" opacity="0.4"/>
+  <circle cx="12" cy="30" r="1" fill="#538CFF" opacity="0.4"/>
+  <circle cx="30" cy="30" r="1" fill="#C0B1FF" opacity="0.4"/>
 </svg>
