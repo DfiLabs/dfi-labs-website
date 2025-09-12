@@ -88,13 +88,17 @@ nav a:hover::after{left:16px;right:16px;transform:none}
   background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;color:transparent;
   opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;
   position:relative}
+.hero h1.show{opacity:1;transform:translateY(0)}
 .hero h1::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
   width:60px;height:3px;background:linear-gradient(90deg,var(--c1),var(--c4));
   border-radius:2px;opacity:0;transition:opacity .8s ease .4s}
+.hero h1.show::after{opacity:1}
 .hero p{max-width:60ch;margin:32px auto 0;color:var(--muted);
   opacity:0;transform:translateY(16px);transition:opacity .8s ease .15s,transform .8s ease .15s;
   font-size:1.1rem;line-height:1.7}
+.hero p.show{opacity:1;transform:translateY(0)}
 .hero-cta{opacity:0;transform:translateY(20px);transition:opacity .8s ease .3s,transform .8s ease .3s}
+.hero-cta.show{opacity:1;transform:translateY(0)}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(83,140,255,.4)!important}
 
 /* === SECTION TEMPLATE ================================================== */
@@ -269,9 +273,9 @@ nav{transform:translateZ(0);will-change:backdrop-filter,background;backface-visi
 <!-- ================= HERO ============================================ -->
 <header class="hero">
   <div>
-    <h1 class="reveal">Disciplined quant expertise<br>scaled to 24 / 7 crypto markets.</h1>
-    <p class="reveal" style="margin-top:16px">From raw data to live trades: we automate the edge.</p>
-    <a href="#contact" class="hero-cta reveal" style="display:inline-block;margin-top:40px;padding:16px 32px;
+    <h1 class="reveal show">Disciplined quant expertise<br>scaled to 24 / 7 crypto markets.</h1>
+    <p class="reveal show" style="margin-top:16px">From raw data to live trades: we automate the edge.</p>
+    <a href="#contact" class="hero-cta reveal show" style="display:inline-block;margin-top:40px;padding:16px 32px;
        background:linear-gradient(90deg,var(--c1),var(--c4));color:#fff;text-decoration:none;
        border-radius:var(--radius);font-weight:600;transition:all .3s ease;
        box-shadow:0 8px 24px rgba(83,140,255,.3)">
@@ -475,10 +479,19 @@ const teamSection=document.querySelector('.team');
 if(teamSection)teamObserver.observe(teamSection);
 
 /* ==== hero animations ============================================== */
+// Show hero content immediately on load
 window.addEventListener('load',()=>{
   const heroElements=document.querySelectorAll('.hero .reveal');
   heroElements.forEach((el,index)=>{
-    setTimeout(()=>el.classList.add('show'),index*200);
+    setTimeout(()=>el.classList.add('show'),index*100);
+  });
+});
+
+// Also show hero content immediately if already loaded
+document.addEventListener('DOMContentLoaded',()=>{
+  const heroElements=document.querySelectorAll('.hero .reveal');
+  heroElements.forEach((el,index)=>{
+    setTimeout(()=>el.classList.add('show'),index*100);
   });
 });
 
