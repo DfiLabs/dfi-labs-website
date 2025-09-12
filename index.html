@@ -39,9 +39,12 @@ html,body{margin:0;background:linear-gradient(135deg,var(--bg) 0%,#f8f9ff 100%);
 #ribbon{position:fixed;top:0;left:0;right:0;height:6px;z-index:900;
   background:linear-gradient(90deg,var(--c1),var(--c4));}
 #chip{position:fixed;top:10px;right:5%;z-index:901;display:flex;align-items:center;gap:8px;
-  padding:5px 14px 5px 18px;border-radius:24px;font:600 15px/1 Inter;
+  padding:8px 16px 8px 20px;border-radius:24px;font:600 15px/1 Inter;
   color:#fff;background:rgba(24,26,32,.9);backdrop-filter:blur(6px);
-  box-shadow:0 3px 12px rgba(0,0,0,.25);transition:background .3s}
+  box-shadow:0 3px 12px rgba(0,0,0,.25);transition:all .3s cubic-bezier(.4,.75,.4,1);
+  cursor:pointer;border:1px solid rgba(255,255,255,.1)}
+#chip:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.4);
+  background:rgba(24,26,32,.95);border-color:rgba(83,140,255,.3)}
 @media(max-width:640px){#chip{right:10px}}
 @keyframes bump{0%,100%{transform:scale(1)}40%{transform:scale(1.08)}}
 #chip.bump{animation:bump .4s cubic-bezier(.45,.09,.26,1.28)}
@@ -49,11 +52,17 @@ html,body{margin:0;background:linear-gradient(135deg,var(--bg) 0%,#f8f9ff 100%);
 /* === NAV =============================================================== */
 nav{position:sticky;top:6px;z-index:850;display:flex;align-items:center;
   padding:12px 5%;background:rgba(255,255,255,.9);backdrop-filter:blur(8px)}
-nav img{height:120px;transition:.3s}
+nav img{height:120px;transition:all .3s cubic-bezier(.4,.75,.4,1);cursor:pointer}
+nav img:hover{transform:scale(1.05);filter:brightness(1.1)}
 nav ul{display:flex;gap:32px;margin-left:auto;list-style:none;padding:0;font-weight:600}
-nav a{color:var(--fg);position:relative;text-decoration:none}
-nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:2px;
-                    background:linear-gradient(90deg,var(--c1),var(--c4))}
+nav a{color:var(--fg);position:relative;text-decoration:none;padding:8px 16px;border-radius:8px;
+      transition:all .3s cubic-bezier(.4,.75,.4,1);font-size:16px}
+nav a:hover{color:var(--c1);background:rgba(83,140,255,.08);transform:translateY(-1px)}
+nav a.active{color:var(--c1);background:rgba(83,140,255,.12)}
+nav a.active::after{content:"";position:absolute;left:50%;right:50%;bottom:-5px;height:3px;
+                    background:linear-gradient(90deg,var(--c1),var(--c4));border-radius:2px;
+                    transform:translateX(-50%);transition:all .3s ease}
+nav a:hover::after{left:16px;right:16px;transform:none}
 #burger{display:none;background:none;border:0;font-size:32px;margin-left:auto}
 @media(max-width:680px){#burger{display:block}
   nav ul{position:fixed;inset:0 0 0 auto;width:240px;padding:120px 26px 0;
