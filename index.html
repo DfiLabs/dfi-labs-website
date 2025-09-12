@@ -531,25 +531,10 @@ function handleScroll(){
   },150);
 }
 
-// Apple-style momentum scrolling
+// Light momentum scrolling (disabled for now to fix speed issues)
 function applyMomentumScroll(){
-  if(Math.abs(scrollVelocity)>2){
-    scrollMomentum=scrollVelocity*0.1;
-    const targetScroll=window.scrollY+scrollMomentum;
-    
-    if(targetScroll>=0&&targetScroll<=document.body.scrollHeight-window.innerHeight){
-      window.scrollTo({
-        top:targetScroll,
-        behavior:'auto'
-      });
-      
-      // Apply momentum with easing
-      scrollMomentum*=0.95;
-      if(Math.abs(scrollMomentum)>0.1){
-        requestAnimationFrame(applyMomentumScroll);
-      }
-    }
-  }
+  // Disabled to prevent slow scrolling
+  return;
 }
 
 // Enhanced scroll event with throttling
@@ -566,17 +551,6 @@ function requestTick(){
 
 // Add scroll event listeners
 window.addEventListener('scroll',requestTick,{passive:true});
-window.addEventListener('wheel',(e)=>{
-  e.preventDefault();
-  const delta=e.deltaY;
-  const currentScroll=window.scrollY;
-  const targetScroll=currentScroll+delta*0.8;
-  
-  window.scrollTo({
-    top:Math.max(0,Math.min(targetScroll,document.body.scrollHeight-window.innerHeight)),
-    behavior:'auto'
-  });
-},{passive:false});
 
 // Touch momentum for mobile
 let touchStartY=0;
