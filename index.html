@@ -33,7 +33,11 @@
 }
 html,body{margin:0;background:linear-gradient(135deg,var(--bg) 0%,#f8f9ff 100%);max-width:100%;
   font:18px/1.6 Inter,Arial,sans-serif;color:var(--fg);scroll-behavior:smooth;
-  min-height:100vh;}
+  min-height:100vh;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:rgba(83,140,255,.3) transparent}
+html::-webkit-scrollbar{width:8px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(83,140,255,.3);border-radius:4px;transition:background .3s ease}
+html::-webkit-scrollbar-thumb:hover{background:rgba(83,140,255,.6)}
 
 /* === PRICE CHIP & RIBBON ============================================== */
 #ribbon{position:fixed;top:0;left:0;right:0;height:6px;z-index:900;
@@ -94,12 +98,28 @@ nav a:hover::after{left:16px;right:16px;transform:none}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(83,140,255,.4)!important}
 
 /* === SECTION TEMPLATE ================================================== */
-section{padding:96px 5%}
-section.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
-.reveal.show{opacity:1!important;transform:none!important}
+section{padding:96px 5%;transform:translateZ(0);will-change:transform}
+section.reveal{opacity:0;transform:translateY(60px) scale(0.98);transition:all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backface-visibility:hidden;perspective:1000px}
+section.reveal.show{opacity:1!important;transform:translateY(0) scale(1)!important}
 section h2{font:700 clamp(2rem,4vw,3rem)/1.2 Inter,sans-serif;margin:0 0 24px;
-  color:var(--fg);position:relative;display:inline-block}
+  color:var(--fg);position:relative;display:inline-block;transform:translateZ(0)}
 section h2 span{font-weight:400;margin-left:12px;opacity:.6}
+
+/* === APPLE-STYLE SCROLL ENHANCEMENTS ================================== */
+*{scroll-behavior:smooth}
+html{-webkit-overflow-scrolling:touch;scroll-behavior:smooth}
+body{overscroll-behavior:contain;scroll-behavior:smooth}
+
+/* Enhanced card animations */
+.card{transform:translateZ(0);will-change:transform,box-shadow;backface-visibility:hidden}
+.card:hover{transform:translateY(-12px) scale(1.02);box-shadow:0 25px 50px rgba(0,0,0,.15),0 12px 24px rgba(0,0,0,.1)}
+
+/* Smooth hero parallax */
+.hero{transform:translateZ(0);will-change:transform;backface-visibility:hidden}
+
+/* Enhanced navigation */
+nav{transform:translateZ(0);will-change:backdrop-filter,background;backface-visibility:hidden}
 
 /* === EDGE GRID ======================================================== */
 .grid{display:grid;gap:44px;margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
@@ -461,6 +481,127 @@ window.addEventListener('load',()=>{
     setTimeout(()=>el.classList.add('show'),index*200);
   });
 });
+
+/* ==== Apple-style smooth scrolling ================================= */
+let isScrolling=false;
+let scrollTimeout;
+let lastScrollY=0;
+let scrollVelocity=0;
+let scrollMomentum=0;
+
+// Enhanced scroll behavior
+function handleScroll(){
+  const currentScrollY=window.scrollY;
+  const scrollDelta=currentScrollY-lastScrollY;
+  
+  // Calculate scroll velocity for momentum
+  scrollVelocity=scrollDelta;
+  lastScrollY=currentScrollY;
+  
+  // Add subtle parallax to hero background
+  const hero=document.querySelector('.hero');
+  if(hero){
+    const parallaxOffset=currentScrollY*0.5;
+    hero.style.transform=`translateY(${parallaxOffset}px)`;
+  }
+  
+  // Enhanced navigation blur effect
+  const nav=document.querySelector('nav');
+  if(nav){
+    const blurAmount=Math.min(currentScrollY/100,10);
+    nav.style.backdropFilter=`blur(${8+blurAmount}px)`;
+    nav.style.background=`rgba(255,255,255,${0.9+blurAmount/100})`;
+  }
+  
+  // Smooth reveal animations with momentum
+  const revealElements=document.querySelectorAll('.reveal:not(.show)');
+  revealElements.forEach(el=>{
+    const rect=el.getBoundingClientRect();
+    const windowHeight=window.innerHeight;
+    if(rect.top<windowHeight*0.8){
+      el.style.transition='all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      el.classList.add('show');
+    }
+  });
+  
+  // Clear timeout and set new one
+  clearTimeout(scrollTimeout);
+  scrollTimeout=setTimeout(()=>{
+    isScrolling=false;
+  },150);
+}
+
+// Apple-style momentum scrolling
+function applyMomentumScroll(){
+  if(Math.abs(scrollVelocity)>2){
+    scrollMomentum=scrollVelocity*0.1;
+    const targetScroll=window.scrollY+scrollMomentum;
+    
+    if(targetScroll>=0&&targetScroll<=document.body.scrollHeight-window.innerHeight){
+      window.scrollTo({
+        top:targetScroll,
+        behavior:'auto'
+      });
+      
+      // Apply momentum with easing
+      scrollMomentum*=0.95;
+      if(Math.abs(scrollMomentum)>0.1){
+        requestAnimationFrame(applyMomentumScroll);
+      }
+    }
+  }
+}
+
+// Enhanced scroll event with throttling
+let ticking=false;
+function requestTick(){
+  if(!ticking){
+    requestAnimationFrame(()=>{
+      handleScroll();
+      ticking=false;
+    });
+    ticking=true;
+  }
+}
+
+// Add scroll event listeners
+window.addEventListener('scroll',requestTick,{passive:true});
+window.addEventListener('wheel',(e)=>{
+  e.preventDefault();
+  const delta=e.deltaY;
+  const currentScroll=window.scrollY;
+  const targetScroll=currentScroll+delta*0.8;
+  
+  window.scrollTo({
+    top:Math.max(0,Math.min(targetScroll,document.body.scrollHeight-window.innerHeight)),
+    behavior:'auto'
+  });
+},{passive:false});
+
+// Touch momentum for mobile
+let touchStartY=0;
+let touchStartTime=0;
+window.addEventListener('touchstart',(e)=>{
+  touchStartY=e.touches[0].clientY;
+  touchStartTime=Date.now();
+},{passive:true});
+
+window.addEventListener('touchend',(e)=>{
+  const touchEndY=e.changedTouches[0].clientY;
+  const touchEndTime=Date.now();
+  const touchDuration=touchEndTime-touchStartTime;
+  const touchDistance=touchStartY-touchEndY;
+  
+  if(touchDuration<300&&Math.abs(touchDistance)>50){
+    const momentum=touchDistance*0.3;
+    const targetScroll=window.scrollY+momentum;
+    
+    window.scrollTo({
+      top:Math.max(0,Math.min(targetScroll,document.body.scrollHeight-window.innerHeight)),
+      behavior:'smooth'
+    });
+  }
+},{passive:true});
 </script>
 
 </body>
