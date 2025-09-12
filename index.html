@@ -31,8 +31,9 @@
   --border:#E2DFD8;--depth-sm:0 3px 6px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.08);
   --depth-lg:0 14px 34px rgba(0,0,0,.1);
 }
-html,body{margin:0;background:var(--bg);max-width:100%;
-  font:18px/1.6 Inter,Arial,sans-serif;color:var(--fg);scroll-behavior:smooth;}
+html,body{margin:0;background:linear-gradient(135deg,var(--bg) 0%,#f8f9ff 100%);max-width:100%;
+  font:18px/1.6 Inter,Arial,sans-serif;color:var(--fg);scroll-behavior:smooth;
+  min-height:100vh;}
 
 /* === PRICE CHIP & RIBBON ============================================== */
 #ribbon{position:fixed;top:0;left:0;right:0;height:6px;z-index:900;
@@ -61,30 +62,54 @@ nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-5px;heig
   nav ul.show{transform:none}}
 
 /* === HERO ============================================================== */
-.hero div{text-align:center}
+.hero div{text-align:center;position:relative;z-index:2}
 .hero{display:flex;align-items:center;justify-content:center;min-height:88vh;padding:0 5%;
   position:relative;overflow:hidden}
-.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:.14}
-.hero::before{width:620px;height:620px;left:-200px;top:-160px;background:var(--c2)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:.14;
+  animation:float 6s ease-in-out infinite}
+.hero::before{width:620px;height:620px;left:-200px;top:-160px;background:var(--c2);
+  animation-delay:-3s}
 .hero::after{width:680px;height:680px;right:-220px;bottom:-220px;background:var(--c3)}
+@keyframes float{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-20px) rotate(180deg)}}
 .hero h1{font:700 clamp(2.3rem,5.3vw,4.3rem)/1.12 Inter,sans-serif;margin:0;
   background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;color:transparent;
-  opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;}
+  opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease;
+  position:relative}
+.hero h1::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  width:60px;height:3px;background:linear-gradient(90deg,var(--c1),var(--c4));
+  border-radius:2px;opacity:0;transition:opacity .8s ease .4s}
 .hero p{max-width:60ch;margin:32px auto 0;color:var(--muted);
-  opacity:0;transform:translateY(16px);transition:opacity .8s ease .15s,transform .8s ease .15s}
+  opacity:0;transform:translateY(16px);transition:opacity .8s ease .15s,transform .8s ease .15s;
+  font-size:1.1rem;line-height:1.7}
+.hero-cta{opacity:0;transform:translateY(20px);transition:opacity .8s ease .3s,transform .8s ease .3s}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(83,140,255,.4)!important}
 
 /* === SECTION TEMPLATE ================================================== */
 section{padding:96px 5%}
 section.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
 .reveal.show{opacity:1!important;transform:none!important}
+section h2{font:700 clamp(2rem,4vw,3rem)/1.2 Inter,sans-serif;margin:0 0 24px;
+  color:var(--fg);position:relative;display:inline-block}
+section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 
 /* === EDGE + SUITE GRIDS =============================================== */
 .grid{display:grid;gap:44px;margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
 .card{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
-  transition:transform .3s cubic-bezier(.4,.75,.4,1),box-shadow .3s}
-.card:hover{transform:translateY(-8px);box-shadow:var(--depth-lg)}
-.card strong{font-size:21px;display:block;margin-bottom:12px}
-.icon{width:42px;height:42px;margin-bottom:22px;}
+  transition:all .4s cubic-bezier(.4,.75,.4,1);position:relative;overflow:hidden;
+  border:1px solid rgba(83,140,255,.08)}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--c1),var(--c4));transform:scaleX(0);
+  transition:transform .4s cubic-bezier(.4,.75,.4,1)}
+.card:hover{transform:translateY(-12px);box-shadow:0 20px 40px rgba(0,0,0,.12),0 8px 16px rgba(0,0,0,.08);
+  border-color:rgba(83,140,255,.2)}
+.card:hover::before{transform:scaleX(1)}
+.card strong{font-size:21px;display:block;margin-bottom:12px;color:var(--fg);
+  transition:color .3s ease}
+.card:hover strong{color:var(--c1)}
+.card p{transition:color .3s ease}
+.card:hover p{color:var(--fg)}
+.icon{width:42px;height:42px;margin-bottom:22px;transition:transform .3s ease,filter .3s ease}
+.card:hover .icon{transform:scale(1.1);filter:brightness(1.1)}
 
 /* === CONTACT =========================================================== */
 .contact-box{background:rgba(83,140,255,.08);border:1px solid #d6e1ff;
@@ -95,24 +120,26 @@ section.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,
 
 /* === TEAM GRID ========================================================= */
 .team{display:grid;gap:54px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:50px}
-.member{text-align:center;opacity:0;transform:translateY(30px);transition:.9s opacity,.9s transform}
+.member{text-align:center;opacity:0;transform:translateY(30px);transition:.9s opacity,.9s transform;
+  padding:24px;border-radius:var(--radius);background:#fff;box-shadow:var(--depth-sm);
+  transition:all .3s ease}
+.member:hover{transform:translateY(-8px);box-shadow:var(--depth-lg)}
 .member.show{opacity:1;transform:none}
-.member img{width:120px;height:120px;border-radius:50%;object-fit:cover;filter:grayscale(100%);box-shadow:var(--depth-sm);margin-bottom:14pxobject-fit:cover;}
+.member img{width:120px;height:120px;border-radius:50%;object-fit:cover;filter:grayscale(100%);
+  box-shadow:var(--depth-sm);margin-bottom:14px;transition:all .3s ease;
+  border:3px solid transparent}
+.member:hover img{filter:grayscale(0%);transform:scale(1.05);
+  border-color:rgba(83,140,255,.2)}
 #yuval{object-position:50% 22%}
 #flavien{object-position:50% 30%}
 #leo{object-position:50% 28%}
 #louis{object-position:50% 26%}
 #olivier{object-position:50% 38%}
 #hadrien{object-position:50% 30%}
-#yuval{object-position:50% 22%}
-#flavien{object-position:50% 30%}
-#leo{object-position:50% 28%}
-#louis{object-position:50% 26%}
-#olivier{object-position:50% 38%}
-#hadrien{object-position:50% 30%}
-.member h3{font-size:19px;margin:0 0 4px}
-.member p{font-size:.92rem;color:var(--muted)}
-  text-align:center;
+.member h3{font-size:19px;margin:0 0 4px;color:var(--fg);transition:color .3s ease}
+.member:hover h3{color:var(--c1)}
+.member p{font-size:.92rem;color:var(--muted);transition:color .3s ease}
+.member:hover p{color:var(--fg)}
 .member .bio{font-size:.85rem;color:var(--muted);line-height:1.45;margin-top:6px}
 
 /* === RISK & GOVERNANCE CARD =========================================== */
@@ -145,6 +172,12 @@ section.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,
   <div>
     <h1 class="reveal">Disciplined quant expertise<br>scaled to 24 / 7 crypto markets.</h1>
     <p class="reveal" style="margin-top:16px">From raw data to live trades: we automate the edge.</p>
+    <a href="#contact" class="hero-cta reveal" style="display:inline-block;margin-top:40px;padding:16px 32px;
+       background:linear-gradient(90deg,var(--c1),var(--c4));color:#fff;text-decoration:none;
+       border-radius:var(--radius);font-weight:600;transition:all .3s ease;
+       box-shadow:0 8px 24px rgba(83,140,255,.3)">
+      Explore Our Edge →
+    </a>
   </div>
 </header>
 
@@ -296,6 +329,14 @@ const ob=new IntersectionObserver((es)=>es.forEach(e=>{
   if(e.isIntersecting){e.target.classList.add('show');ob.unobserve(e.target)}
 }),{threshold:.18});
 revealEls.forEach(el=>ob.observe(el));
+
+/* ==== hero animations ============================================== */
+window.addEventListener('load',()=>{
+  const heroElements=document.querySelectorAll('.hero .reveal');
+  heroElements.forEach((el,index)=>{
+    setTimeout(()=>el.classList.add('show'),index*200);
+  });
+});
 </script>
 
 <!-- ─────────────── Contact form (serverless) ─────────────── -->
