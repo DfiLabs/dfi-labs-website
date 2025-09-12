@@ -92,7 +92,7 @@ section h2{font:700 clamp(2rem,4vw,3rem)/1.2 Inter,sans-serif;margin:0 0 24px;
   color:var(--fg);position:relative;display:inline-block}
 section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 
-/* === EDGE + SUITE GRIDS =============================================== */
+/* === EDGE GRID ======================================================== */
 .grid{display:grid;gap:44px;margin-top:48px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
 .card{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
   transition:all .4s cubic-bezier(.4,.75,.4,1);position:relative;overflow:hidden;
@@ -110,6 +110,33 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 .card:hover p{color:var(--fg)}
 .icon{width:42px;height:42px;margin-bottom:22px;transition:transform .3s ease,filter .3s ease}
 .card:hover .icon{transform:scale(1.1);filter:brightness(1.1)}
+
+/* === STRATEGY SUITE - UNIQUE DESIGN ================================== */
+.strategies-container{display:flex;flex-direction:column;gap:32px;margin-top:48px;max-width:1200px;margin-left:auto;margin-right:auto}
+.strategy-item{display:flex;align-items:center;gap:48px;padding:48px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(248,249,255,.9));
+  border-radius:24px;border:1px solid rgba(83,140,255,.1);transition:all .4s ease;position:relative;overflow:hidden}
+.strategy-item::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(180deg,var(--c1),var(--c4));transform:scaleY(0);
+  transition:transform .4s cubic-bezier(.4,.75,.4,1)}
+.strategy-item:hover{transform:translateX(8px);box-shadow:0 16px 32px rgba(0,0,0,.1);
+  border-color:rgba(83,140,255,.2)}
+.strategy-item:hover::before{transform:scaleY(1)}
+.strategy-icon{width:80px;height:80px;background:linear-gradient(135deg,var(--c1),var(--c4));
+  border-radius:20px;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .3s ease}
+.strategy-icon img{width:40px;height:40px;filter:brightness(0) invert(1)}
+.strategy-item:hover .strategy-icon{transform:scale(1.1) rotate(5deg)}
+.strategy-content{flex:1}
+.strategy-title{font:700 24px/1.2 Inter,sans-serif;margin:0 0 12px;color:var(--fg);
+  transition:color .3s ease}
+.strategy-item:hover .strategy-title{color:var(--c1)}
+.strategy-desc{font-size:16px;line-height:1.6;color:var(--muted);margin:0;
+  transition:color .3s ease}
+.strategy-item:hover .strategy-desc{color:var(--fg)}
+@media(max-width:768px){
+  .strategy-item{flex-direction:column;text-align:center;gap:24px;padding:32px}
+  .strategy-item:hover{transform:translateY(-4px)}
+}
 
 /* === CONTACT =========================================================== */
 .contact-box{background:rgba(83,140,255,.08);border:1px solid #d6e1ff;
@@ -217,19 +244,33 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 <!-- ===== Strategy Suite ============================================== -->
 <section id="suite" class="reveal">
   <h2>Strategy Suite <span style="color:var(--muted);font-size:28px">03.</span></h2>
-  <div class="grid">
-    <div class="card reveal">
-      <img class="icon" loading="lazy" src="/assets/icons/vision.svg" alt="" />
-      <strong>Vision — Directional</strong>
-      <p>Selective long exposure with dynamic hedging powered by factor & sentiment regimes.</p>
+  <div class="strategies-container">
+    <div class="strategy-item reveal">
+      <div class="strategy-icon">
+        <img loading="lazy" src="/assets/icons/vision.svg" alt="" />
+      </div>
+      <div class="strategy-content">
+        <h3 class="strategy-title">Vision — Directional</h3>
+        <p class="strategy-desc">Selective long exposure with dynamic hedging powered by factor & sentiment regimes.</p>
+      </div>
     </div>
-    <div class="card reveal">
-      <img class="icon" loading="lazy" src="/assets/icons/descartes.svg" alt="" />
-      <strong>Descartes — Market-Neutral</strong><p>Cross-sectional long-short harvesting dispersion across 100 + liquid tokens.</p>
+    <div class="strategy-item reveal">
+      <div class="strategy-icon">
+        <img loading="lazy" src="/assets/icons/descartes.svg" alt="" />
+      </div>
+      <div class="strategy-content">
+        <h3 class="strategy-title">Descartes — Market-Neutral</h3>
+        <p class="strategy-desc">Cross-sectional long-short harvesting dispersion across 100 + liquid tokens.</p>
+      </div>
     </div>
-    <div class="card reveal">
-      <img class="icon" loading="lazy" src="/assets/icons/smartarb.svg" alt="" />
-      <strong>SmartArb — Delta-Neutral</strong><p>Basis capture between futures/perps and spot pairs for low-volatility yield.</p>
+    <div class="strategy-item reveal">
+      <div class="strategy-icon">
+        <img loading="lazy" src="/assets/icons/smartarb.svg" alt="" />
+      </div>
+      <div class="strategy-content">
+        <h3 class="strategy-title">SmartArb — Delta-Neutral</h3>
+        <p class="strategy-desc">Basis capture between futures/perps and spot pairs for low-volatility yield.</p>
+      </div>
     </div>
   </div>
 </section>
