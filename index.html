@@ -76,7 +76,7 @@ nav a:hover::after{left:16px;right:16px;transform:none}
 
 /* === HERO ============================================================== */
 .hero div{text-align:center;position:relative;z-index:2}
-.hero{display:flex;align-items:center;justify-content:center;min-height:88vh;padding:0 5% 60px;
+.hero{display:flex;align-items:center;justify-content:center;min-height:88vh;padding:0 5% 80px;
   position:relative;overflow:hidden}
 .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(110px);opacity:.14;
   animation:float 6s ease-in-out infinite}
@@ -103,7 +103,7 @@ nav a:hover::after{left:16px;right:16px;transform:none}
 .hero-cta:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(83,140,255,.4)!important}
 
 /* === SECTION TEMPLATE ================================================== */
-section{padding:120px 5%;transform:translateZ(0);will-change:transform}
+section{padding:140px 5%;transform:translateZ(0);will-change:transform}
 section.reveal{opacity:0;transform:translateY(60px) scale(0.98);transition:all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   backface-visibility:hidden;perspective:1000px}
 section.reveal.show{opacity:1!important;transform:translateY(0) scale(1)!important}
@@ -127,7 +127,7 @@ body{overscroll-behavior:contain;scroll-behavior:smooth}
 nav{transform:translateZ(0);will-change:backdrop-filter,background;backface-visibility:hidden}
 
 /* === EDGE GRID ======================================================== */
-.grid{display:grid;gap:44px;margin-top:60px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.grid{display:grid;gap:44px;margin-top:80px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
 .card{background:#fff;border-radius:var(--radius);padding:42px 38px;box-shadow:var(--depth-sm);
   transition:all .4s cubic-bezier(.4,.75,.4,1);position:relative;overflow:hidden;
   border:1px solid rgba(83,140,255,.08)}
@@ -512,10 +512,10 @@ function handleScroll(){
   scrollVelocity=scrollDelta;
   lastScrollY=currentScrollY;
   
-  // Add subtle parallax to hero background
+  // Add very subtle parallax to hero background
   const hero=document.querySelector('.hero');
   if(hero){
-    const parallaxOffset=currentScrollY*0.5;
+    const parallaxOffset=currentScrollY*0.1;
     hero.style.transform=`translateY(${parallaxOffset}px)`;
   }
   
