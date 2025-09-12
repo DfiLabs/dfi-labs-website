@@ -138,12 +138,30 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
   .strategy-item:hover{transform:translateY(-4px)}
 }
 
-/* === CONTACT =========================================================== */
-.contact-box{background:rgba(83,140,255,.08);border:1px solid #d6e1ff;
-  padding:68px 86px;max-width:740px;margin:auto;border-radius:var(--radius);text-align:center}
-.mail-btn{display:inline-block;margin-top:34px;padding:15px 44px;border:2px solid var(--c1);
-  border-radius:var(--radius);font-weight:600;text-decoration:none;color:var(--fg)}
-.mail-btn:hover{background:var(--c1);color:#fff}
+/* === INVESTMENT CTA =================================================== */
+.investment-cta{display:grid;grid-template-columns:2fr 1fr;gap:60px;max-width:1200px;margin:60px auto 0;
+  background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,249,255,.95));
+  border-radius:24px;padding:60px;box-shadow:0 16px 48px rgba(0,0,0,.08);
+  border:1px solid rgba(83,140,255,.1)}
+.cta-content h3{font:700 32px/1.2 Inter,sans-serif;margin:0 0 20px;color:var(--fg)}
+.cta-content p{font-size:18px;line-height:1.6;color:var(--muted);margin:0 0 40px;max-width:500px}
+.cta-actions{display:flex;gap:20px;flex-wrap:wrap}
+.primary-btn{display:inline-block;padding:16px 32px;background:linear-gradient(90deg,var(--c1),var(--c4));
+  color:#fff;text-decoration:none;border-radius:var(--radius);font-weight:600;font-size:16px;
+  transition:all .3s ease;box-shadow:0 8px 24px rgba(83,140,255,.3)}
+.primary-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(83,140,255,.4)}
+.secondary-btn{display:inline-block;padding:16px 32px;border:2px solid var(--c1);color:var(--c1);
+  text-decoration:none;border-radius:var(--radius);font-weight:600;font-size:16px;
+  transition:all .3s ease}
+.secondary-btn:hover{background:var(--c1);color:#fff;transform:translateY(-2px)}
+.contact-info{display:flex;flex-direction:column;gap:32px;justify-content:center}
+.info-item strong{display:block;font-size:16px;color:var(--fg);margin-bottom:8px;font-weight:600}
+.info-item p{font-size:15px;color:var(--muted);margin:0;line-height:1.5}
+@media(max-width:768px){
+  .investment-cta{grid-template-columns:1fr;gap:40px;padding:40px;margin:40px 20px 0}
+  .cta-actions{flex-direction:column}
+  .cta-content h3{font-size:28px}
+}
 
 /* === TEAM GRID ========================================================= */
 .team{display:grid;gap:40px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:60px;
@@ -339,10 +357,26 @@ section h2 span{font-weight:400;margin-left:12px;opacity:.6}
 
 <!-- ===== Contact ====================================================== -->
 <section id="contact" class="reveal">
-  <div class="contact-box">
-    <h2>Contact <span style="color:var(--muted);font-size:28px">05.</span></h2>
-    <p>14 Avenue du Général-de-Gaulle<br>94160 Saint-Mandé – France</p>
-    <a href="mailto:hello@dfi-labs.com" class="mail-btn">hello@dfi-labs.com</a>
+  <h2>Investment Inquiry <span style="color:var(--muted);font-size:28px">05.</span></h2>
+  <div class="investment-cta">
+    <div class="cta-content">
+      <h3>Ready to explore institutional crypto strategies?</h3>
+      <p>Connect with our team to discuss investment opportunities, risk management, and portfolio allocation strategies tailored to your institutional needs.</p>
+      <div class="cta-actions">
+        <a href="mailto:investments@dfi-labs.com" class="primary-btn">Schedule Consultation</a>
+        <a href="mailto:hello@dfi-labs.com" class="secondary-btn">General Inquiry</a>
+      </div>
+    </div>
+    <div class="contact-info">
+      <div class="info-item">
+        <strong>Investment Team</strong>
+        <p>investments@dfi-labs.com</p>
+      </div>
+      <div class="info-item">
+        <strong>Office</strong>
+        <p>14 Avenue du Général-de-Gaulle<br>94160 Saint-Mandé, France</p>
+      </div>
+    </div>
   </div>
 </section>
 </main>
@@ -420,40 +454,5 @@ window.addEventListener('load',()=>{
 });
 </script>
 
-<!-- ─────────────── Contact form (serverless) ─────────────── -->
-<!-- contact form -->
-<section id="contact" class="cta-box">
-  <form id="contactForm">
-    <h3>Request a call</h3>
-    <input  name="name"  placeholder="Your name"      required>
-    <input  name="email" type="email" placeholder="Work e‑mail" required>
-    <textarea name="message" rows="4"
-              placeholder="Tell us a bit about your interest…" required></textarea>
-    <button type="submit">Send →</button>
-    <p id="status" hidden style="color:green;margin-top:.8rem">
-      ✓ Message sent — we’ll reply shortly.
-    </p>
-  </form>
-</section>
-
-<script>
-const API="https://n9oqppdfw5.execute-api.eu-west-1.amazonaws.com/prod/contact";
-document.getElementById("contactForm").addEventListener("submit",async e=>{
-  e.preventDefault();
-  const fd=new FormData(e.target);
-  const res=await fetch(API,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify(Object.fromEntries(fd))
-  });
-  if(res.ok){
-    document.getElementById("status").hidden=false;
-    e.target.reset();
-  }else{
-    alert("Sorry – something went wrong. Please try again later.");
-  }
-});
-</script>
-<!-- /contact form -->
 </body>
 </html>
