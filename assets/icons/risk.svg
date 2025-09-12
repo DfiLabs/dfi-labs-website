@@ -1,16 +1,41 @@
-<!-- @license lucide-static v0.525.0 - ISC -->
-<svg
-  class="lucide lucide-shield-check"
-  xmlns="http://www.w3.org/2000/svg"
-  width="24"
-  height="24"
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="#A2ABFF"
-  stroke-width="2"
-  stroke-linecap="round"
-  stroke-linejoin="round"
->
-  <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-  <path d="m9 12 2 2 4-4" />
+<!-- Premium Risk & Governance Icon -->
+<svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 42 42" fill="none">
+  <defs>
+    <linearGradient id="riskGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#538CFF;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#C0B1FF;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="riskStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#538CFF" />
+      <stop offset="100%" style="stop-color:#C0B1FF" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <circle cx="21" cy="21" r="20" fill="url(#riskGradient)" stroke="url(#riskStroke)" stroke-width="1.5"/>
+  
+  <g transform="translate(8, 8)">
+    <!-- Shield -->
+    <path d="M13 2 L20 4 L20 12 C20 16 13 22 13 22 C13 22 6 16 6 12 L6 4 Z" 
+          stroke="url(#riskStroke)" stroke-width="2" fill="url(#riskGradient)"/>
+    
+    <!-- Checkmark -->
+    <path d="M9 12 L11 14 L17 8" stroke="url(#riskStroke)" stroke-width="2.5" 
+          stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Security layers -->
+    <circle cx="13" cy="8" r="1.5" fill="url(#riskStroke)" opacity="0.6"/>
+    <circle cx="13" cy="11" r="1" fill="url(#riskStroke)" opacity="0.4"/>
+    <circle cx="13" cy="14" r="0.8" fill="url(#riskStroke)" opacity="0.3"/>
+    
+    <!-- AMF indicator -->
+    <rect x="4" y="18" width="18" height="4" rx="2" fill="url(#riskGradient)" stroke="url(#riskStroke)" stroke-width="1"/>
+    <text x="13" y="21" font-family="Inter, sans-serif" font-size="3" font-weight="600" fill="#538CFF" text-anchor="middle">AMF</text>
+    
+    <!-- Security dots -->
+    <circle cx="8" cy="6" r="0.5" fill="#538CFF" opacity="0.5"/>
+    <circle cx="18" cy="6" r="0.5" fill="#538CFF" opacity="0.5"/>
+    <circle cx="8" cy="16" r="0.5" fill="#538CFF" opacity="0.5"/>
+    <circle cx="18" cy="16" r="0.5" fill="#538CFF" opacity="0.5"/>
+  </g>
 </svg>
