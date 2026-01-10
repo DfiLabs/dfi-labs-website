@@ -168,70 +168,31 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
   pointer-events:none
 }
 .hero-inner{position:relative;z-index:2;width:100%}
-.hero-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
-  gap:56px;
-  align-items:center
-}
-.hero-copy{min-width:0}
-.hero-visual{
-  align-self:stretch;
-  border-radius:28px;
-  background:
-    radial-gradient(420px 260px at 20% 15%, rgba(77,124,255,.18), transparent 65%),
-    radial-gradient(420px 260px at 80% 70%, rgba(184,167,255,.16), transparent 65%),
-    rgba(255,255,255,.72);
-  border:1px solid rgba(11,16,32,.10);
-  box-shadow:var(--shadow-lg);
-  overflow:hidden;
-  position:relative;
-  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
-  will-change:transform;
-  transition:transform .18s ease;
-  min-height:340px
-}
-.hero-visual::after{
-  content:"";
+.hero-copy{min-width:0;max-width:760px}
+.hero-art{
   position:absolute;inset:0;
-  border-radius:inherit;
-  padding:1px;
-  background:conic-gradient(from 180deg, rgba(77,124,255,.55), rgba(184,167,255,.45), rgba(77,124,255,.55));
-  opacity:.55;
+  z-index:1;
   pointer-events:none;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  animation:borderSpin 18s linear infinite
+  display:flex;align-items:center;justify-content:flex-end;
+  opacity:.34;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, rgba(0,0,0,.16) 30%, rgba(0,0,0,1) 62%, rgba(0,0,0,1) 100%);
+  mask-image:linear-gradient(90deg, transparent 0%, rgba(0,0,0,.16) 30%, rgba(0,0,0,1) 62%, rgba(0,0,0,1) 100%)
 }
-@keyframes borderSpin{to{transform:rotate(360deg)}}
-.hero-visual::before{
-  content:"";
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(to right, rgba(11,16,32,.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(11,16,32,.05) 1px, transparent 1px);
-  background-size:44px 44px;
-  opacity:.22;
-  mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%);
-  -webkit-mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%)
+.hero-art svg{
+  width:min(760px, 62vw);
+  height:auto;
+  max-height:520px;
+  transform:translateX(6%)
 }
-.hero-visual svg{display:block;width:100%;height:100%}
-.hero-visual .contour{fill:none;stroke:rgba(11,16,32,.18);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
-.hero-visual .contour.faint{stroke:rgba(11,16,32,.10)}
-.hero-visual .highlight{fill:none;stroke:url(#fieldGrad);stroke-width:2.25;stroke-linecap:round;filter:url(#softGlow2);opacity:.95}
-.hero-visual .node{fill:rgba(77,124,255,.34)}
-.hero-visual .node.alt{fill:rgba(184,167,255,.30)}
-@keyframes nodePulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.95;transform:scale(1.08)}}
-.hero-visual .node{transform-origin:center;animation:nodePulse 4.6s ease-in-out infinite}
+.hero-art .contour{fill:none;stroke:rgba(11,16,32,.12);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
+.hero-art .contour.faint{stroke:rgba(11,16,32,.07)}
+.hero-art .highlight{fill:none;stroke:url(#fieldGrad);stroke-width:2.1;stroke-linecap:round;filter:url(#softGlow2);opacity:.62}
 @media(max-width:980px){
-  .hero-layout{grid-template-columns:1fr;gap:26px}
-  .hero-visual{min-height:260px}
+  .hero-copy{max-width:unset}
+  .hero-art{opacity:.24;justify-content:center;
+    -webkit-mask-image:radial-gradient(circle at 60% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 58%, transparent 85%);
+    mask-image:radial-gradient(circle at 60% 45%, rgba(0,0,0,1) 0%, rgba(0,0,0,.9) 58%, transparent 85%)}
+  .hero-art svg{width:min(720px, 92vw);transform:none}
 }
 .eyebrow{
   margin:0 0 18px;
@@ -504,70 +465,61 @@ section h2 .section-number{
 <!-- ================= HERO ============================================ -->
 <header class="hero">
   <div class="hero-inner wrap">
-    <div class="hero-layout">
-      <div class="hero-copy">
-        <p class="eyebrow reveal">Paris-based quantitative crypto asset manager</p>
-        <h1 class="reveal">Disciplined research. Industrial execution.<br><span class="accent">24 / 7 markets.</span></h1>
-        <p class="lead reveal">From raw data to live trades: we design, validate and run systematic strategies with institutional risk governance and capacity management.</p>
-        <div class="hero-actions reveal">
-          <a href="https://calendar.app.google/748ajBwj1N7EcYeB8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Request a call</a>
-          <a href="#edge" class="btn btn-ghost">Our edge</a>
-        </div>
-        <div class="hero-metrics reveal" role="list" aria-label="Firm highlights">
-          <div class="metric" role="listitem"><span class="metric-k">2019</span><span class="metric-l">Established</span></div>
-          <div class="metric" role="listitem"><span class="metric-k">AMF</span><span class="metric-l">Registered (E2022-032)</span></div>
-          <div class="metric" role="listitem"><span class="metric-k">24 / 7</span><span class="metric-l">Execution + risk</span></div>
-          <div class="metric" role="listitem"><span class="metric-k">100+</span><span class="metric-l">Liquid universe</span></div>
-        </div>
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Paris-based quantitative crypto asset manager</p>
+      <h1 class="reveal">Disciplined research. Industrial execution.<br><span class="accent">24 / 7 markets.</span></h1>
+      <p class="lead reveal">From raw data to live trades: we design, validate and run systematic strategies with institutional risk governance and capacity management.</p>
+      <div class="hero-actions reveal">
+        <a href="https://calendar.app.google/748ajBwj1N7EcYeB8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Request a call</a>
+        <a href="#edge" class="btn btn-ghost">Our edge</a>
       </div>
-      <div class="hero-visual reveal" aria-hidden="true">
-        <svg viewBox="0 0 720 520" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="fieldGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.86"/>
-              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.86"/>
-            </linearGradient>
-            <filter id="softGlow2" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="7" result="blur"/>
-              <feColorMatrix in="blur" type="matrix" values="
-                1 0 0 0 0
-                0 1 0 0 0
-                0 0 1 0 0
-                0 0 0 0.18 0" result="glow"/>
-              <feMerge>
-                <feMergeNode in="glow"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            <mask id="fadeMask">
-              <rect x="0" y="0" width="720" height="520" fill="url(#fadeGrad)"/>
-            </mask>
-            <radialGradient id="fadeGrad" cx="50%" cy="50%" r="72%">
-              <stop offset="0%" stop-color="white" stop-opacity="1"/>
-              <stop offset="68%" stop-color="white" stop-opacity="1"/>
-              <stop offset="100%" stop-color="white" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <g mask="url(#fadeMask)" opacity="0.92">
-            <path class="contour faint" data-contour="1" d="M0,120 L720,120"></path>
-            <path class="contour" data-contour="1" d="M0,170 L720,170"></path>
-            <path class="contour faint" data-contour="1" d="M0,220 L720,220"></path>
-            <path class="contour" data-contour="1" d="M0,270 L720,270"></path>
-            <path class="contour faint" data-contour="1" d="M0,320 L720,320"></path>
-            <path class="contour" data-contour="1" d="M0,370 L720,370"></path>
-            <path class="contour faint" data-contour="1" d="M0,420 L720,420"></path>
-            <path class="highlight" data-highlight="1" d="M0,295 L720,295"></path>
-
-            <circle class="node" cx="118" cy="208" r="3.2" style="animation-delay:-0.8s"></circle>
-            <circle class="node alt" cx="214" cy="352" r="2.8" style="animation-delay:-2.0s"></circle>
-            <circle class="node" cx="340" cy="168" r="2.6" style="animation-delay:-1.4s"></circle>
-            <circle class="node alt" cx="456" cy="304" r="3.0" style="animation-delay:-2.8s"></circle>
-            <circle class="node" cx="560" cy="238" r="2.6" style="animation-delay:-3.2s"></circle>
-            <circle class="node alt" cx="634" cy="388" r="2.8" style="animation-delay:-1.9s"></circle>
-          </g>
-        </svg>
+      <div class="hero-metrics reveal" role="list" aria-label="Firm highlights">
+        <div class="metric" role="listitem"><span class="metric-k">2019</span><span class="metric-l">Established</span></div>
+        <div class="metric" role="listitem"><span class="metric-k">AMF</span><span class="metric-l">Registered (E2022-032)</span></div>
+        <div class="metric" role="listitem"><span class="metric-k">24 / 7</span><span class="metric-l">Execution + risk</span></div>
+        <div class="metric" role="listitem"><span class="metric-k">100+</span><span class="metric-l">Liquid universe</span></div>
       </div>
     </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 720 520" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="fieldGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.86"/>
+          <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.86"/>
+        </linearGradient>
+        <filter id="softGlow2" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="7" result="blur"/>
+          <feColorMatrix in="blur" type="matrix" values="
+            1 0 0 0 0
+            0 1 0 0 0
+            0 0 1 0 0
+            0 0 0 0.18 0" result="glow"/>
+          <feMerge>
+            <feMergeNode in="glow"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <mask id="fadeMask">
+          <rect x="0" y="0" width="720" height="520" fill="url(#fadeGrad)"/>
+        </mask>
+        <radialGradient id="fadeGrad" cx="50%" cy="50%" r="72%">
+          <stop offset="0%" stop-color="white" stop-opacity="1"/>
+          <stop offset="68%" stop-color="white" stop-opacity="1"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <g mask="url(#fadeMask)" opacity="0.92">
+        <path class="contour faint" data-contour="1" d="M0,120 L720,120"></path>
+        <path class="contour" data-contour="1" d="M0,170 L720,170"></path>
+        <path class="contour faint" data-contour="1" d="M0,220 L720,220"></path>
+        <path class="contour" data-contour="1" d="M0,270 L720,270"></path>
+        <path class="contour faint" data-contour="1" d="M0,320 L720,320"></path>
+        <path class="contour" data-contour="1" d="M0,370 L720,370"></path>
+        <path class="contour faint" data-contour="1" d="M0,420 L720,420"></path>
+        <path class="highlight" data-highlight="1" d="M0,295 L720,295"></path>
+      </g>
+    </svg>
   </div>
 </header>
 
@@ -789,8 +741,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(prefersReduce) return;
 
-  const lines = [...document.querySelectorAll('.hero-visual path[data-contour]')];
-  const highlight = document.querySelector('.hero-visual path[data-highlight]');
+  const lines = [...document.querySelectorAll('.hero-art path[data-contour]')];
+  const highlight = document.querySelector('.hero-art path[data-highlight]');
   if(lines.length === 0 || !highlight) return;
 
   let raf = null;
@@ -860,58 +812,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(document.hidden) stop();
     else start();
   });
-})();
-
-/* ==== hero visual tilt (subtle, desktop only) ======================== */
-(function(){
-  const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(prefersReduce) return;
-  const finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
-  if(!finePointer) return;
-
-  const card = document.querySelector('.hero-visual');
-  if(!card) return;
-
-  let raf = null;
-  let tx = 0, ty = 0;
-  let cx = 0, cy = 0;
-
-  function update(){
-    cx += (tx - cx) * 0.12;
-    cy += (ty - cy) * 0.12;
-    card.style.setProperty('--rx', cx.toFixed(2) + 'deg');
-    card.style.setProperty('--ry', cy.toFixed(2) + 'deg');
-    raf = requestAnimationFrame(update);
-  }
-
-  function start(){
-    if(raf) return;
-    raf = requestAnimationFrame(update);
-  }
-
-  function stop(){
-    if(!raf) return;
-    cancelAnimationFrame(raf);
-    raf = null;
-  }
-
-  function onMove(e){
-    const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    tx = (-y * 6.0);
-    ty = (x * 8.0);
-    start();
-  }
-
-  function onLeave(){
-    tx = 0; ty = 0;
-    // allow ease back then stop the loop
-    setTimeout(()=>{ if(tx === 0 && ty === 0) stop(); }, 260);
-  }
-
-  card.addEventListener('mousemove', onMove, { passive: true });
-  card.addEventListener('mouseleave', onLeave, { passive: true });
 })();
 </script>
 
