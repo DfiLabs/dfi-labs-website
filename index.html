@@ -42,6 +42,7 @@
   --border:rgba(11,16,32,.12);
   --shadow-sm:0 10px 28px rgba(11,16,32,.08);
   --shadow-md:0 18px 60px rgba(11,16,32,.12);
+  --shadow-lg:0 34px 120px rgba(11,16,32,.16);
 }
 html,body{margin:0;max-width:100%;font:17px/1.6 Inter,Arial,sans-serif;scroll-behavior:smooth;min-height:100vh;overflow-x:hidden}
 body{
@@ -106,6 +107,20 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
 #burger{display:none;background:none;border:0;color:rgba(11,16,32,.9);font-size:32px;margin-left:auto}
 .nav-actions{margin-left:auto;display:flex;align-items:center;gap:12px}
 .nav-actions ul{margin-left:0}
+.nav-cta{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 14px;border-radius:999px;
+  text-decoration:none;
+  font-weight:650;font-size:14px;letter-spacing:.01em;
+  color:#fff;
+  background:linear-gradient(90deg,var(--c1),var(--c4));
+  border:1px solid rgba(77,124,255,.18);
+  box-shadow:0 14px 44px rgba(77,124,255,.14);
+  transition:transform .22s ease,box-shadow .22s ease,filter .22s ease
+}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:0 18px 60px rgba(77,124,255,.18);filter:saturate(1.05)}
+@media(max-width:1020px){.nav-cta{display:none}}
+@media(max-width:960px){#chip{display:none}}
 @media(max-width:680px){
   #burger{display:block}
   #chip{display:none}
@@ -153,6 +168,53 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
   pointer-events:none
 }
 .hero-inner{position:relative;z-index:2;width:100%}
+.hero-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
+  gap:56px;
+  align-items:end
+}
+.hero-copy{min-width:0}
+.hero-visual{
+  align-self:stretch;
+  border-radius:28px;
+  background:
+    radial-gradient(420px 260px at 20% 15%, rgba(77,124,255,.18), transparent 65%),
+    radial-gradient(420px 260px at 80% 70%, rgba(184,167,255,.16), transparent 65%),
+    rgba(255,255,255,.72);
+  border:1px solid rgba(11,16,32,.10);
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  position:relative;
+  transform:translateZ(0)
+}
+.hero-visual::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right, rgba(11,16,32,.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11,16,32,.05) 1px, transparent 1px);
+  background-size:44px 44px;
+  opacity:.35;
+  mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%);
+  -webkit-mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%)
+}
+.hero-visual svg{display:block;width:100%;height:100%}
+.hero-visual .label{
+  position:absolute;left:18px;top:16px;
+  font:650 12px/1 Inter,Arial,sans-serif;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(11,16,32,.52)
+}
+.hero-visual .sub{
+  position:absolute;left:18px;top:38px;
+  font:600 12px/1.2 Inter,Arial,sans-serif;
+  color:rgba(11,16,32,.62)
+}
+@media(max-width:980px){
+  .hero-layout{grid-template-columns:1fr;gap:26px}
+  .hero-visual{min-height:260px}
+}
 .eyebrow{
   margin:0 0 18px;
   font:650 12px/1 Inter,Arial,sans-serif;
@@ -413,6 +475,7 @@ section h2 .section-number{
       <li><a href="#firm">Firm</a></li><li><a href="#edge">Edge</a></li>
       <li><a href="#suite">Strategies</a></li><li><a href="#contact">Contact</a></li>
     </ul>
+    <a class="nav-cta" href="https://calendar.app.google/748ajBwj1N7EcYeB8" target="_blank" rel="noopener noreferrer">Book a call</a>
     <div id="chip" aria-label="BTC price"><span id="btc">–</span></div>
     <button id="burger" aria-label="menu">☰</button>
   </div>
@@ -421,18 +484,56 @@ section h2 .section-number{
 <!-- ================= HERO ============================================ -->
 <header class="hero">
   <div class="hero-inner wrap">
-    <p class="eyebrow reveal">Paris-based quant crypto asset manager</p>
-    <h1 class="reveal">Disciplined research. Industrial execution.<br><span class="accent">24 / 7 markets.</span></h1>
-    <p class="lead reveal">From raw data to live trades: we design, validate and run systematic strategies with institutional risk governance.</p>
-    <div class="hero-actions reveal">
-      <a href="#contact" class="btn btn-primary">Investment inquiry</a>
-      <a href="#edge" class="btn btn-ghost">Our edge</a>
-    </div>
-    <div class="hero-metrics reveal" role="list" aria-label="Firm highlights">
-      <div class="metric" role="listitem"><span class="metric-k">2019</span><span class="metric-l">Established</span></div>
-      <div class="metric" role="listitem"><span class="metric-k">AMF</span><span class="metric-l">Registered (E2022-032)</span></div>
-      <div class="metric" role="listitem"><span class="metric-k">24 / 7</span><span class="metric-l">Execution + risk</span></div>
-      <div class="metric" role="listitem"><span class="metric-k">100+</span><span class="metric-l">Liquid universe</span></div>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Paris-based quant crypto asset manager</p>
+        <h1 class="reveal">Disciplined research. Industrial execution.<br><span class="accent">24 / 7 markets.</span></h1>
+        <p class="lead reveal">From raw data to live trades: we design, validate and run systematic strategies with institutional risk governance.</p>
+        <div class="hero-actions reveal">
+          <a href="https://calendar.app.google/748ajBwj1N7EcYeB8" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a call</a>
+          <a href="#edge" class="btn btn-ghost">Our edge</a>
+        </div>
+        <div class="hero-metrics reveal" role="list" aria-label="Firm highlights">
+          <div class="metric" role="listitem"><span class="metric-k">2019</span><span class="metric-l">Established</span></div>
+          <div class="metric" role="listitem"><span class="metric-k">AMF</span><span class="metric-l">Registered (E2022-032)</span></div>
+          <div class="metric" role="listitem"><span class="metric-k">24 / 7</span><span class="metric-l">Execution + risk</span></div>
+          <div class="metric" role="listitem"><span class="metric-k">100+</span><span class="metric-l">Liquid universe</span></div>
+        </div>
+      </div>
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="label">Signal view</div>
+        <div class="sub">Research to execution - simplified</div>
+        <svg viewBox="0 0 720 520" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="sparkStroke" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.95"/>
+              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.95"/>
+            </linearGradient>
+            <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.20"/>
+              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.02"/>
+            </linearGradient>
+            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feColorMatrix in="blur" type="matrix" values="
+                1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 0.26 0" result="glow"/>
+              <feMerge>
+                <feMergeNode in="glow"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <g opacity="0.85">
+            <path id="sparkArea" d="M0,380 L720,380 L720,520 L0,520 Z" fill="url(#sparkFill)"></path>
+            <path id="sparkPath" d="M0,380 L720,380" stroke="url(#sparkStroke)" stroke-width="3.2" fill="none" filter="url(#softGlow)" stroke-linecap="round"></path>
+            <circle id="sparkDotHalo" cx="0" cy="380" r="14" fill="#4D7CFF" opacity="0.12"></circle>
+            <circle id="sparkDot" cx="0" cy="380" r="5.2" fill="#4D7CFF" opacity="0.92"></circle>
+          </g>
+        </svg>
+      </div>
     </div>
   </div>
 </header>
@@ -559,7 +660,7 @@ section h2 .section-number{
         <h3>Explore institutional crypto strategies.</h3>
         <p>Connect with our team to discuss portfolio fit, risk governance and implementation details.</p>
         <div class="cta-actions">
-          <a href="mailto:hello@dfi-labs.com?subject=Investment Consultation Request&body=Hello DFI Labs team,%0D%0A%0D%0AI am interested in scheduling a consultation to discuss institutional crypto investment opportunities.%0D%0A%0D%0APlease let me know your availability.%0D%0A%0D%0ABest regards," class="primary-btn">Schedule a call</a>
+          <a href="https://calendar.app.google/748ajBwj1N7EcYeB8" target="_blank" rel="noopener noreferrer" class="primary-btn">Book a call</a>
           <a href="mailto:hello@dfi-labs.com?subject=General Inquiry&body=Hello DFI Labs team,%0D%0A%0D%0AI would like to learn more about your services.%0D%0A%0D%0APlease provide additional information.%0D%0A%0D%0ABest regards," class="secondary-btn">Email us</a>
         </div>
       </div>
@@ -647,6 +748,87 @@ document.addEventListener('DOMContentLoaded',()=>{
   const heroEls=[...document.querySelectorAll('.hero .reveal')];
   heroEls.forEach((el,index)=>setTimeout(()=>el.classList.add('show'),index*110));
 });
+
+/* ==== hero "signal" animation (subtle) =============================== */
+(function(){
+  const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduce) return;
+
+  const pathEl = document.getElementById('sparkPath');
+  const areaEl = document.getElementById('sparkArea');
+  const dotEl = document.getElementById('sparkDot');
+  const haloEl = document.getElementById('sparkDotHalo');
+  if(!pathEl || !areaEl || !dotEl || !haloEl) return;
+
+  let raf = null;
+  let running = false;
+
+  const W = 720;
+  const H = 520;
+  const base = 340;
+  const amp = 52;
+  const padX = 6;
+  const n = 56;
+
+  function makeY(t, x01){
+    const a = Math.sin(t*0.00055 + x01*6.0);
+    const b = Math.sin(t*0.00023 + x01*12.0 + 1.7);
+    const c = Math.sin(t*0.00012 + x01*20.0 + 0.6);
+    const mix = (a*0.60 + b*0.28 + c*0.12);
+    const slope = (x01 - 0.55) * 18;
+    return base - (mix * amp) - slope;
+  }
+
+  function frame(t){
+    if(!running) return;
+    let d = '';
+    let lastX = 0, lastY = base;
+    for(let i=0;i<n;i++){
+      const x01 = i/(n-1);
+      const x = padX + x01*(W - padX*2);
+      const y = makeY(t, x01);
+      d += (i===0 ? `M${x.toFixed(2)},${y.toFixed(2)}` : ` L${x.toFixed(2)},${y.toFixed(2)}`);
+      lastX = x; lastY = y;
+    }
+
+    pathEl.setAttribute('d', d);
+    areaEl.setAttribute('d', `${d} L${lastX.toFixed(2)},${H} L${padX.toFixed(2)},${H} Z`);
+    dotEl.setAttribute('cx', lastX.toFixed(2));
+    dotEl.setAttribute('cy', lastY.toFixed(2));
+    haloEl.setAttribute('cx', lastX.toFixed(2));
+    haloEl.setAttribute('cy', lastY.toFixed(2));
+
+    raf = requestAnimationFrame(frame);
+  }
+
+  function start(){
+    if(running) return;
+    running = true;
+    raf = requestAnimationFrame(frame);
+  }
+  function stop(){
+    running = false;
+    if(raf) cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  // Start only once hero is in view, stop when hidden.
+  const hero = document.querySelector('.hero');
+  if(!hero){ start(); return; }
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) start();
+      else stop();
+    });
+  }, { threshold: 0.18 });
+  io.observe(hero);
+
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.hidden) stop();
+    else start();
+  });
+})();
 </script>
 
 </body>
