@@ -172,7 +172,7 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
   display:grid;
   grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);
   gap:56px;
-  align-items:end
+  align-items:center
 }
 .hero-copy{min-width:0}
 .hero-visual{
@@ -186,8 +186,27 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
   box-shadow:var(--shadow-lg);
   overflow:hidden;
   position:relative;
-  transform:translateZ(0)
+  transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
+  will-change:transform;
+  transition:transform .18s ease;
+  min-height:340px
 }
+.hero-visual::after{
+  content:"";
+  position:absolute;inset:0;
+  border-radius:inherit;
+  padding:1px;
+  background:conic-gradient(from 180deg, rgba(77,124,255,.55), rgba(184,167,255,.45), rgba(77,124,255,.55));
+  opacity:.55;
+  pointer-events:none;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  animation:borderSpin 18s linear infinite
+}
+@keyframes borderSpin{to{transform:rotate(360deg)}}
 .hero-visual::before{
   content:"";
   position:absolute;inset:0;
@@ -200,17 +219,6 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
   -webkit-mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%)
 }
 .hero-visual svg{display:block;width:100%;height:100%}
-.hero-visual .label{
-  position:absolute;left:18px;top:16px;
-  font:650 12px/1 Inter,Arial,sans-serif;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:rgba(11,16,32,.52)
-}
-.hero-visual .sub{
-  position:absolute;left:18px;top:38px;
-  font:600 12px/1.2 Inter,Arial,sans-serif;
-  color:rgba(11,16,32,.62)
-}
 @media(max-width:980px){
   .hero-layout{grid-template-columns:1fr;gap:26px}
   .hero-visual{min-height:260px}
@@ -406,6 +414,7 @@ section h2 .section-number{
   transition:transform .25s ease,filter .25s ease,box-shadow .25s ease
 }
 .member:hover img{transform:scale(1.03);filter:grayscale(0%);box-shadow:0 14px 40px rgba(77,124,255,.14)}
+.member:hover img#yuval{filter:grayscale(100%)}
 #yuval{object-position:50% 22%}
 #flavien{object-position:50% 30%}
 #leo{object-position:50% 28%}
@@ -501,8 +510,6 @@ section h2 .section-number{
         </div>
       </div>
       <div class="hero-visual reveal" aria-hidden="true">
-        <div class="label">Signal view</div>
-        <div class="sub">Research to execution - simplified</div>
         <svg viewBox="0 0 720 520" preserveAspectRatio="none">
           <defs>
             <linearGradient id="sparkStroke" x1="0" y1="0" x2="1" y2="0">
@@ -828,6 +835,58 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(document.hidden) stop();
     else start();
   });
+})();
+
+/* ==== hero visual tilt (subtle, desktop only) ======================== */
+(function(){
+  const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduce) return;
+  const finePointer = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+  if(!finePointer) return;
+
+  const card = document.querySelector('.hero-visual');
+  if(!card) return;
+
+  let raf = null;
+  let tx = 0, ty = 0;
+  let cx = 0, cy = 0;
+
+  function update(){
+    cx += (tx - cx) * 0.12;
+    cy += (ty - cy) * 0.12;
+    card.style.setProperty('--rx', cx.toFixed(2) + 'deg');
+    card.style.setProperty('--ry', cy.toFixed(2) + 'deg');
+    raf = requestAnimationFrame(update);
+  }
+
+  function start(){
+    if(raf) return;
+    raf = requestAnimationFrame(update);
+  }
+
+  function stop(){
+    if(!raf) return;
+    cancelAnimationFrame(raf);
+    raf = null;
+  }
+
+  function onMove(e){
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    tx = (-y * 6.0);
+    ty = (x * 8.0);
+    start();
+  }
+
+  function onLeave(){
+    tx = 0; ty = 0;
+    // allow ease back then stop the loop
+    setTimeout(()=>{ if(tx === 0 && ty === 0) stop(); }, 260);
+  }
+
+  card.addEventListener('mousemove', onMove, { passive: true });
+  card.addEventListener('mouseleave', onLeave, { passive: true });
 })();
 </script>
 
