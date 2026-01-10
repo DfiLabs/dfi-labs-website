@@ -7,7 +7,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      BUCKET: dfi-labs.com
+      # CloudFront origin bucket for dfi-labs.com
+      BUCKET: dfi-onboarding-site
     steps:
       - uses: actions/checkout@v4
 
