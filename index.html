@@ -217,11 +217,18 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
     linear-gradient(to right, rgba(11,16,32,.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(11,16,32,.05) 1px, transparent 1px);
   background-size:44px 44px;
-  opacity:.35;
+  opacity:.22;
   mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%);
   -webkit-mask-image:radial-gradient(circle at 50% 42%, rgba(0,0,0,1) 0%, rgba(0,0,0,.7) 42%, transparent 70%)
 }
 .hero-visual svg{display:block;width:100%;height:100%}
+.hero-visual .contour{fill:none;stroke:rgba(11,16,32,.18);stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round}
+.hero-visual .contour.faint{stroke:rgba(11,16,32,.10)}
+.hero-visual .highlight{fill:none;stroke:url(#fieldGrad);stroke-width:2.25;stroke-linecap:round;filter:url(#softGlow2);opacity:.95}
+.hero-visual .node{fill:rgba(77,124,255,.34)}
+.hero-visual .node.alt{fill:rgba(184,167,255,.30)}
+@keyframes nodePulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.95;transform:scale(1.08)}}
+.hero-visual .node{transform-origin:center;animation:nodePulse 4.6s ease-in-out infinite}
 @media(max-width:980px){
   .hero-layout{grid-template-columns:1fr;gap:26px}
   .hero-visual{min-height:260px}
@@ -516,32 +523,47 @@ section h2 .section-number{
       <div class="hero-visual reveal" aria-hidden="true">
         <svg viewBox="0 0 720 520" preserveAspectRatio="none">
           <defs>
-            <linearGradient id="sparkStroke" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.95"/>
-              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.95"/>
+            <linearGradient id="fieldGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.86"/>
+              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.86"/>
             </linearGradient>
-            <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#4D7CFF" stop-opacity="0.20"/>
-              <stop offset="1" stop-color="#B8A7FF" stop-opacity="0.02"/>
-            </linearGradient>
-            <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="6" result="blur"/>
+            <filter id="softGlow2" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="7" result="blur"/>
               <feColorMatrix in="blur" type="matrix" values="
                 1 0 0 0 0
                 0 1 0 0 0
                 0 0 1 0 0
-                0 0 0 0.26 0" result="glow"/>
+                0 0 0 0.18 0" result="glow"/>
               <feMerge>
                 <feMergeNode in="glow"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
+            <mask id="fadeMask">
+              <rect x="0" y="0" width="720" height="520" fill="url(#fadeGrad)"/>
+            </mask>
+            <radialGradient id="fadeGrad" cx="50%" cy="50%" r="72%">
+              <stop offset="0%" stop-color="white" stop-opacity="1"/>
+              <stop offset="68%" stop-color="white" stop-opacity="1"/>
+              <stop offset="100%" stop-color="white" stop-opacity="0"/>
+            </radialGradient>
           </defs>
-          <g opacity="0.85">
-            <path id="sparkArea" d="M0,380 L720,380 L720,520 L0,520 Z" fill="url(#sparkFill)"></path>
-            <path id="sparkPath" d="M0,380 L720,380" stroke="url(#sparkStroke)" stroke-width="3.2" fill="none" filter="url(#softGlow)" stroke-linecap="round"></path>
-            <circle id="sparkDotHalo" cx="0" cy="380" r="14" fill="#4D7CFF" opacity="0.12"></circle>
-            <circle id="sparkDot" cx="0" cy="380" r="5.2" fill="#4D7CFF" opacity="0.92"></circle>
+          <g mask="url(#fadeMask)" opacity="0.92">
+            <path class="contour faint" data-contour="1" d="M0,120 L720,120"></path>
+            <path class="contour" data-contour="1" d="M0,170 L720,170"></path>
+            <path class="contour faint" data-contour="1" d="M0,220 L720,220"></path>
+            <path class="contour" data-contour="1" d="M0,270 L720,270"></path>
+            <path class="contour faint" data-contour="1" d="M0,320 L720,320"></path>
+            <path class="contour" data-contour="1" d="M0,370 L720,370"></path>
+            <path class="contour faint" data-contour="1" d="M0,420 L720,420"></path>
+            <path class="highlight" data-highlight="1" d="M0,295 L720,295"></path>
+
+            <circle class="node" cx="118" cy="208" r="3.2" style="animation-delay:-0.8s"></circle>
+            <circle class="node alt" cx="214" cy="352" r="2.8" style="animation-delay:-2.0s"></circle>
+            <circle class="node" cx="340" cy="168" r="2.6" style="animation-delay:-1.4s"></circle>
+            <circle class="node alt" cx="456" cy="304" r="3.0" style="animation-delay:-2.8s"></circle>
+            <circle class="node" cx="560" cy="238" r="2.6" style="animation-delay:-3.2s"></circle>
+            <circle class="node alt" cx="634" cy="388" r="2.8" style="animation-delay:-1.9s"></circle>
           </g>
         </svg>
       </div>
@@ -763,55 +785,53 @@ document.addEventListener('DOMContentLoaded',()=>{
   heroEls.forEach((el,index)=>setTimeout(()=>el.classList.add('show'),index*110));
 });
 
-/* ==== hero "signal" animation (subtle) =============================== */
+/* ==== hero flow-field animation (subtle, non-chart) =================== */
 (function(){
   const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(prefersReduce) return;
 
-  const pathEl = document.getElementById('sparkPath');
-  const areaEl = document.getElementById('sparkArea');
-  const dotEl = document.getElementById('sparkDot');
-  const haloEl = document.getElementById('sparkDotHalo');
-  if(!pathEl || !areaEl || !dotEl || !haloEl) return;
+  const lines = [...document.querySelectorAll('.hero-visual path[data-contour]')];
+  const highlight = document.querySelector('.hero-visual path[data-highlight]');
+  if(lines.length === 0 || !highlight) return;
 
   let raf = null;
   let running = false;
 
   const W = 720;
-  const H = 520;
-  const base = 340;
-  const amp = 52;
-  const padX = 6;
-  const n = 56;
+  const padX = 10;
+  const n = 64;
+  const bases = [120, 170, 220, 270, 320, 370, 420];
 
-  function makeY(t, x01){
-    const a = Math.sin(t*0.00055 + x01*6.0);
-    const b = Math.sin(t*0.00023 + x01*12.0 + 1.7);
-    const c = Math.sin(t*0.00012 + x01*20.0 + 0.6);
-    const mix = (a*0.60 + b*0.28 + c*0.12);
-    const slope = (x01 - 0.55) * 18;
-    return base - (mix * amp) - slope;
+  function yAt(t, x01, i){
+    const p = i * 0.6;
+    const a = Math.sin(t*0.00035 + x01*5.2 + p);
+    const b = Math.sin(t*0.00018 + x01*10.8 + 1.2 + p*0.7);
+    const c = Math.sin(t*0.00009 + x01*18.0 + 0.4 + p*1.3);
+    const mix = a*0.56 + b*0.30 + c*0.14;
+    const taper = Math.sin(x01 * Math.PI);
+    const amp = (10 + i*1.25) * taper;
+    return bases[i] + mix * amp;
+  }
+
+  function buildPath(t, i){
+    let d = '';
+    for(let k=0;k<n;k++){
+      const x01 = k/(n-1);
+      const x = padX + x01*(W - padX*2);
+      const y = yAt(t, x01, i);
+      d += (k===0 ? `M${x.toFixed(2)},${y.toFixed(2)}` : ` L${x.toFixed(2)},${y.toFixed(2)}`);
+    }
+    return d;
   }
 
   function frame(t){
     if(!running) return;
-    let d = '';
-    let lastX = 0, lastY = base;
-    for(let i=0;i<n;i++){
-      const x01 = i/(n-1);
-      const x = padX + x01*(W - padX*2);
-      const y = makeY(t, x01);
-      d += (i===0 ? `M${x.toFixed(2)},${y.toFixed(2)}` : ` L${x.toFixed(2)},${y.toFixed(2)}`);
-      lastX = x; lastY = y;
+    for(let i=0;i<lines.length;i++){
+      lines[i].setAttribute('d', buildPath(t, i));
     }
-
-    pathEl.setAttribute('d', d);
-    areaEl.setAttribute('d', `${d} L${lastX.toFixed(2)},${H} L${padX.toFixed(2)},${H} Z`);
-    dotEl.setAttribute('cx', lastX.toFixed(2));
-    dotEl.setAttribute('cy', lastY.toFixed(2));
-    haloEl.setAttribute('cx', lastX.toFixed(2));
-    haloEl.setAttribute('cy', lastY.toFixed(2));
-
+    // Highlight rides between two layers for depth.
+    const h = buildPath(t, 3).replace(/^M/, 'M');
+    highlight.setAttribute('d', h);
     raf = requestAnimationFrame(frame);
   }
 
@@ -826,7 +846,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     raf = null;
   }
 
-  // Start only once hero is in view, stop when hidden.
   const hero = document.querySelector('.hero');
   if(!hero){ start(); return; }
 
