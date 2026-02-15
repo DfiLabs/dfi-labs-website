@@ -73,9 +73,10 @@
 html,body{margin:0;max-width:100%;font:17px/1.6 Inter,Arial,sans-serif;scroll-behavior:smooth;min-height:100vh;overflow-x:hidden}
 body{
   background:
-    radial-gradient(900px 520px at 18% 12%, rgba(77,124,255,.16), transparent 62%),
-    radial-gradient(820px 560px at 86% 28%, rgba(184,167,255,.14), transparent 58%),
-    linear-gradient(135deg, var(--bg) 0%, #F3F6FF 100%);
+    radial-gradient(980px 560px at 16% 10%, rgba(77,124,255,.18), transparent 60%),
+    radial-gradient(900px 620px at 88% 24%, rgba(184,167,255,.16), transparent 56%),
+    radial-gradient(860px 520px at 50% 110%, rgba(25,195,125,.10), transparent 58%),
+    linear-gradient(135deg, var(--bg) 0%, #F2F6FF 100%);
   color:var(--fg);
 }
 ::selection{background:rgba(77,124,255,.28)}
@@ -176,6 +177,11 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
 .wrap{max-width:1180px;margin:0 auto}
 
 /* === HERO ============================================================ */
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  45%{transform:translate3d(16px,-10px,0) scale(1.02)}
+  100%{transform:translate3d(-10px,14px,0) scale(1.01)}
+}
 .hero{
   position:relative;overflow:hidden;
   min-height:86vh;
@@ -199,7 +205,8 @@ nav a.active{color:var(--fg);background:rgba(77,124,255,.12);border-color:rgba(7
     radial-gradient(520px 340px at 78% 55%, rgba(184,167,255,.16), transparent 58%);
   filter:blur(10px);
   opacity:.85;
-  pointer-events:none
+  pointer-events:none;
+  animation:drift 14s ease-in-out infinite
 }
 .hero-inner{position:relative;z-index:2;width:100%}
 .hero-copy{min-width:0;max-width:760px}
@@ -330,13 +337,15 @@ section h2 .section-number{
 /* === EDGE GRID ======================================================== */
 .grid{display:grid;gap:22px;margin-top:34px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .card{
-  background:rgba(255,255,255,.78);
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.66));
   border-radius:var(--radius-lg);
   padding:34px 30px;
   border:1px solid rgba(11,16,32,.10);
   box-shadow:var(--shadow-sm);
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease;
-  position:relative;overflow:hidden
+  position:relative;overflow:hidden;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px)
 }
 .card::before{
   content:"";position:absolute;left:0;right:0;top:0;height:3px;
@@ -344,7 +353,7 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.18);background:rgba(255,255,255,.88)}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
 .card:hover::before{opacity:1;transform:none}
 .icon{width:42px;height:42px;margin-bottom:16px}
 .card strong{display:block;margin-bottom:10px;font-size:18px;letter-spacing:-0.01em}
@@ -360,12 +369,14 @@ section h2 .section-number{
 .strategy-item{
   display:flex;flex-direction:column;gap:16px;
   padding:32px 28px;
-  background:rgba(255,255,255,.78);
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.66));
   border-radius:var(--radius-lg);
   border:1px solid rgba(11,16,32,.10);
   box-shadow:var(--shadow-sm);
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease;
-  position:relative;overflow:hidden
+  position:relative;overflow:hidden;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px)
 }
 .strategy-item::before{
   content:"";position:absolute;left:0;right:0;top:0;height:3px;
@@ -373,7 +384,7 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.strategy-item:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.18);background:rgba(255,255,255,.88)}
+.strategy-item:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
 .strategy-item:hover::before{opacity:1;transform:none}
 .strategy-icon{
   width:42px;height:42px;
@@ -394,11 +405,13 @@ section h2 .section-number{
   text-align:center;
   padding:30px 22px;
   border-radius:var(--radius-lg);
-  background:rgba(255,255,255,.78);
+  background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.66));
   border:1px solid rgba(11,16,32,.10);
   box-shadow:var(--shadow-sm);
   transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease;
-  position:relative;overflow:hidden
+  position:relative;overflow:hidden;
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px)
 }
 .js .member{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease}
 .member.show{opacity:1;transform:none}
@@ -408,19 +421,20 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.member:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.18);background:rgba(255,255,255,.88)}
+.member:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
 .member:hover::before{opacity:1;transform:none}
 .member img{
   width:132px;height:132px;border-radius:50%;
   object-fit:cover;
   filter:grayscale(100%);
-  box-shadow:0 10px 32px rgba(0,0,0,.12);
+  box-shadow:0 10px 32px rgba(0,0,0,.12), 0 0 0 2px rgba(77,124,255,.10);
+  border:1px solid rgba(11,16,32,.10);
+  background:rgba(255,255,255,.92);
   margin-bottom:16px;
   transition:transform .25s ease,filter .25s ease,box-shadow .25s ease
 }
-.member:hover img{transform:scale(1.03);filter:grayscale(0%);box-shadow:0 14px 40px rgba(77,124,255,.14)}
-.member:hover img#yuval{filter:grayscale(100%)}
-#yuval{object-position:50% 22%}
+.member:hover img{transform:scale(1.03);filter:grayscale(0%);box-shadow:0 14px 40px rgba(77,124,255,.14), 0 0 0 3px rgba(77,124,255,.16)}
+#julien{object-position:50% 22%}
 #flavien{object-position:50% 30%}
 #leo{object-position:50% 28%}
 #louis{object-position:50% 26%}
@@ -437,9 +451,11 @@ section h2 .section-number{
   margin:40px auto 0;
   padding:44px;
   border-radius:var(--radius-lg);
-  background:rgba(255,255,255,.82);
+  background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
   border:1px solid rgba(11,16,32,.10);
-  box-shadow:var(--shadow-md)
+  box-shadow:var(--shadow-md);
+  -webkit-backdrop-filter:blur(14px);
+  backdrop-filter:blur(14px)
 }
 .cta-content h3{margin:0 0 14px;font:700 26px/1.15 Inter,Arial,sans-serif;letter-spacing:-0.02em}
 .cta-content p{margin:0 0 26px;color:rgba(11,16,32,.72)}
@@ -663,8 +679,8 @@ section h2 .section-number{
         <p class="bio">Data-science &amp; ML expert (top 1 % Kaggle).<br>Ex-Google; ENSTA ParisTech.</p>
       </div>
       <div class="member">
-        <img loading="lazy" id="leo" src="/img/team/leo.webp" alt="Leo Rene">
-        <h3>Leo Rene</h3><p>CTO</p>
+        <img loading="lazy" id="leo" src="/img/team/leo.webp" alt="Léo René">
+        <h3>Léo René</h3><p>CTO</p>
         <p class="bio">Data &amp; ML-focused; Researcher at Qube.<br>ENSAE &amp; École Polytechnique.</p>
       </div>
     </div>
