@@ -86,10 +86,18 @@ a{color:inherit}
 :focus-visible{outline:2px solid rgba(77,124,255,.8);outline-offset:3px;border-radius:10px}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  #ribbon{animation:none!important}
+  .hero::after{animation:none!important}
 }
 
 /* === PRICE CHIP & RIBBON ============================================= */
-#ribbon{position:fixed;top:0;left:0;right:0;height:4px;z-index:900;background:linear-gradient(90deg,var(--c1),var(--c4))}
+@keyframes ribbonShift{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+#ribbon{
+  position:fixed;top:0;left:0;right:0;height:4px;z-index:900;
+  background:linear-gradient(90deg,var(--c1),var(--c4),var(--c3),var(--c1));
+  background-size:200% 100%;
+  animation:ribbonShift 10s linear infinite
+}
 #chip{
   display:flex;align-items:center;gap:10px;
   padding:10px 14px;border-radius:999px;
@@ -353,7 +361,12 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-md), 0 26px 110px rgba(77,124,255,.10);
+  border-color:rgba(77,124,255,.20);
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))
+}
 .card:hover::before{opacity:1;transform:none}
 .icon{width:42px;height:42px;margin-bottom:16px}
 .card strong{display:block;margin-bottom:10px;font-size:18px;letter-spacing:-0.01em}
@@ -384,7 +397,12 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.strategy-item:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
+.strategy-item:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-md), 0 26px 110px rgba(184,167,255,.10);
+  border-color:rgba(77,124,255,.20);
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))
+}
 .strategy-item:hover::before{opacity:1;transform:none}
 .strategy-icon{
   width:42px;height:42px;
@@ -421,7 +439,12 @@ section h2 .section-number{
   opacity:.0;transform:translateY(-2px);
   transition:opacity .25s ease,transform .25s ease
 }
-.member:hover{transform:translateY(-6px);box-shadow:var(--shadow-md);border-color:rgba(77,124,255,.20);background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))}
+.member:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow-md), 0 26px 110px rgba(77,124,255,.12);
+  border-color:rgba(77,124,255,.20);
+  background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.74))
+}
 .member:hover::before{opacity:1;transform:none}
 .member img{
   width:132px;height:132px;border-radius:50%;
@@ -434,7 +457,7 @@ section h2 .section-number{
   transition:transform .25s ease,filter .25s ease,box-shadow .25s ease
 }
 .member:hover img{transform:scale(1.03);filter:grayscale(0%);box-shadow:0 14px 40px rgba(77,124,255,.14), 0 0 0 3px rgba(77,124,255,.16)}
-#julien{object-position:50% 22%}
+#julien{object-position:50% 48%}
 #flavien{object-position:50% 30%}
 #leo{object-position:50% 28%}
 #louis{object-position:50% 26%}
@@ -671,7 +694,7 @@ section h2 .section-number{
       <div class="member">
         <img loading="lazy" id="julien" src="/img/team/julien.jpg" alt="Julien Boudier">
         <h3>Julien Boudier</h3><p>Partner</p>
-        <p class="bio">Partner at Definer and a crypto arbitrage fund. Former Head of Hybrid &amp; Light Exotics at Morgan Stanley; derivatives trader at BNP Paribas. MSc Finance, ENSAE Paris.</p>
+        <p class="bio">Partner, Definer (crypto arbitrage). Ex‑Morgan Stanley (Hybrid &amp; Light Exotics) and BNP Paribas (Derivatives). MSc Finance, ENSAE Paris.</p>
       </div>
       <div class="member">
         <img loading="lazy" id="flavien" src="/img/team/flavien.webp" alt="Flavien Gelineau">
